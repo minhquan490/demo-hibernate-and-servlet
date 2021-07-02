@@ -18,14 +18,14 @@ import javax.persistence.Table;
 public class Cart implements Serializable {
     
     @Id
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user")
     @PrimaryKeyJoinColumn(name = "cart_id")
     private User user;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Set<CartItem> cartItems;
 
-    @Column
+    @Column(name = "buy_date")
     private Date buyDate;
 
     public Cart(User user, Set<CartItem> cartItems, Date buyDate) {

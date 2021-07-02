@@ -18,33 +18,34 @@ public class User implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @Column
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
-    @Column
+    @Column(name = "gender")
     private String gender;
 
-    @Column
+    @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column
+    @Column(name = "address")
     private String address;
 
-    @Column
+    @Column(name = "phone")
     private String phone;
 
-    @Column
+    @Column(name = "username")
     private String username;
 
-    @Column
+    @Column(name = "password")
     private String password;
 
-    @Column
+    @Column(name = "role_id")
     private int roleId;
 
     public User(int id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password) {
