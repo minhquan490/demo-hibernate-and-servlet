@@ -21,7 +21,7 @@ public class LoginController extends HttpServlet {
 
     private void remember(HttpServletResponse resp, String username) {
         Cookie cookie = new Cookie("username", username);
-        cookie.setMaxAge(60 * 60 * 24 * 15);
+        cookie.setMaxAge(60 * 60);
         resp.addCookie(cookie);
     }
 

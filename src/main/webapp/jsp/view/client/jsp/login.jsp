@@ -8,7 +8,12 @@
     </head>
 
     <body>
-
+        <form action="login" method="post">
+            <input type="text" name="username" id="username">Username <br>
+            <input type="password" name="password" id="password">Password <br>
+            <input type="checkbox" name="remember" value="on">Remember Me <br>
+            <button type="submit">Login</button>
+        </form>
     </body>
 
     </html>
