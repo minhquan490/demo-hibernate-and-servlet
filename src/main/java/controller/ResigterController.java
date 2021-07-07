@@ -49,7 +49,7 @@ public class ResigterController extends HttpServlet {
                 } else {
                     message = "Error !";
                     req.setAttribute("message", message);
-                    req.getRequestDispatcher("/jsp/view/client/jsp/resigter/jsp").forward(req, resp);
+                    req.getRequestDispatcher("/jsp/view/client/jsp/resigter.jsp").forward(req, resp);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

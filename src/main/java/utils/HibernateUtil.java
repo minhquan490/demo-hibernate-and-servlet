@@ -25,7 +25,7 @@ public class HibernateUtil {
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
                 settings.put(Environment.URL,"jdbc:mysql://127.0.0.1:3306/demo-hibernate-and-servlet?useSSL=false");
-                settings.put(Environment.USER, "root");
+                settings.put(Environment.USER, "quan");
                 settings.put(Environment.PASS, "quan0868550492");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
                 settings.put(Environment.SHOW_SQL, "true");
