@@ -16,7 +16,7 @@ import service.impl.UserServiceImpl;
 
 @WebServlet(value = "/login")
 public class LoginController extends HttpServlet {
-    
+
     UserService userService = new UserServiceImpl();
 
     private void remember(HttpServletResponse resp, String username) {
@@ -43,6 +43,7 @@ public class LoginController extends HttpServlet {
                 }
             }
         }
+        req.getRequestDispatcher("/jsp/view/client/jsp/login.jsp").forward(req, resp);
     }
 
     @Override

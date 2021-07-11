@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+//import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,17 +13,17 @@ import service.UserService;
 import service.impl.UserServiceImpl;
 import utils.SendEmail;
 
-@WebServlet(value = "/register")
+@WebServlet(urlPatterns = "/register")
 public class ResigterController extends HttpServlet {
 
     UserService userService = new UserServiceImpl();
+    String message = "";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-        String message = "";
         int roleId = Integer.parseInt(req.getParameter("role_id"));
 
         if (userService.checkUsernameExist(username)) {
@@ -39,7 +40,7 @@ public class ResigterController extends HttpServlet {
             return;
         }
 
-        if (userService.checkUsernameExist(username) && userService.checkEmailExist(email)) {
+        if (!userService.checkUsernameExist(username) && !userService.checkEmailExist(email)) {
             try {
                 Boolean success = userService.register(username, email, password, roleId);
                 if (success) {

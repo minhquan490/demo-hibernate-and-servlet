@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(user);
+            session.saveOrUpdate(user);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -148,6 +148,7 @@ public class UserDaoImpl implements UserDao{
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
         } else {
             return false;
@@ -171,6 +172,7 @@ public class UserDaoImpl implements UserDao{
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
         return false;
     }
