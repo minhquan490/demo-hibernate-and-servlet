@@ -10,7 +10,7 @@
 
         <body>
             <form action="${pageContext.request.contextPath}/register" method="post">
-                <input type="hidden" name="role_id" value="1"><br>Username:
+                <input type="hidden" name="role_id" value="2"><br>Username:
                 <input type="text" name="username" id="username"><br>Password:
                 <input type="password" name="password" id="password"><br>Email:
                 <input type="text" name="email" id="email"><br>
