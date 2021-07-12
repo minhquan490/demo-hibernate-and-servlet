@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(String username, String email, String password, int roleId) throws SQLException {
-        if (userDao.checkUsernameExist(username) && userDao.checkEmailExist(email)) {
+        if (userDao.checkUsernameExist(username) || userDao.checkEmailExist(email)) {
             return false;
         } else {
             userDao.save(new User(email, username, password, roleId));

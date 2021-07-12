@@ -33,7 +33,7 @@ public class User implements Serializable {
     @Column(name = "birth_date")
     private Date birthDate;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "TEXT")
     private String address;
 
     @Column(name = "phone")
@@ -42,11 +42,15 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", columnDefinition = "TEXT")
     private String password;
 
     @Column(name = "role_id")
     private int roleId;
+
+    public User() {
+        super();
+    }
 
     public User(int id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password) {
         super();
@@ -57,14 +61,14 @@ public class User implements Serializable {
         this.address = address;
         this.phone = phone;
         this.username = username;
-        this.password = password;
+        this.password = sha256(password);
     }
 
     public User(String email, String username, String password, int roleId) {
         super();
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = sha256(password);
         this.roleId = roleId;
     }
 
@@ -137,12 +141,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        if (password.length() <= 64 && password.length() > 4) {
-            String sha256 = DigestUtils.sha256Hex(password);
-            this.password = sha256;
-        } else {
-            this.password = password;
-        }
+        this.password = sha256(password);
     }
 
     public int getRoleId() {
@@ -151,5 +150,15 @@ public class User implements Serializable {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    private String sha256(String password) {
+        String sha256 = "";
+        if (password.length() <= 64 && password.length() > 4) {
+            sha256 = DigestUtils.sha256Hex(password);
+        } else {
+            sha256 = "Pass dai qua";
+        }
+        return sha256;
     }
 }

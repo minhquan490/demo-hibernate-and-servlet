@@ -22,12 +22,9 @@ public class UserDaoImpl implements UserDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(user);
+            session.save(user);
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-				transaction.rollback();
-			}
 			e.printStackTrace();
         }
     }
@@ -40,9 +37,6 @@ public class UserDaoImpl implements UserDao{
             session.saveOrUpdate(user);
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-				transaction.rollback();
-			}
 			e.printStackTrace();
         }
     }
@@ -52,16 +46,16 @@ public class UserDaoImpl implements UserDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
+            String hql = "delete User U where U.id = :id";
             User user = session.get(User.class, id);
             if (user != null) {
+                Query query = session.createQuery(hql).setParameter("id", id);
+                query.executeUpdate();
                 session.delete(user);
                 return true;
             }
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-				transaction.rollback();
-			}
 			e.printStackTrace();
         }
         return false;
@@ -79,9 +73,6 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-				transaction.rollback();
-			}
 			e.printStackTrace();
         }
         return user;
@@ -99,9 +90,6 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-				transaction.rollback();
-			}
 			e.printStackTrace();
         }
         return user;
@@ -163,11 +151,10 @@ public class UserDaoImpl implements UserDao{
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.username = :username";
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
+            Query query = (Query) session.createQuery(hql).setParameter("username", username);
             user = (User) query.getSingleResult();
             transaction.commit();
-            if (user == null) {
+            if (user != null) {
                 return true;
             }
         } catch (Exception e) {

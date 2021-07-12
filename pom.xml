@@ -82,10 +82,16 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate.common</groupId>
-      <artifactId>hibernate-commons-annotations</artifactId>
-      <version>5.1.2.Final</version>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+      <version>3.4.0.GA</version>
     </dependency>
+
+  <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-api</artifactId>
+    <version>1.7.25</version>
+  </dependency>
   </dependencies>
 
   <build>
