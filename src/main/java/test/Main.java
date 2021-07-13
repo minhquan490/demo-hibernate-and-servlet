@@ -1,4 +1,4 @@
-/*package test;
+package test;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -20,9 +20,9 @@ public class Main {
         System.out.println("password");
         String password = input.nextLine();
 
-        int roleId = 1;
-        System.out.println("Nhap id");
-        int id = Integer.parseInt(input.nextLine());
+        int roleId = 2;
+        /*System.out.println("Nhap id");
+        int id = Integer.parseInt(input.nextLine());*/
 
         try {
             Boolean success = userService.register(username, email, password, roleId);
@@ -32,16 +32,15 @@ public class Main {
                 System.out.println("Failure");
             }
 
-            Boolean success = userService.delete(id);
+            /*Boolean success = userService.delete(id);
             if (success) {
                 System.out.println("Delete success");
             } else {
                 System.out.println("Failure");
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
         input.close();
     }
 }
-*/

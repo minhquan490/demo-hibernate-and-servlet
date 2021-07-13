@@ -17,5 +17,11 @@
 	  <property name="hibernate.dbcp.maxIdle">10</property>
 	  <property name="hibernate.dbcp.minIdle">5</property>
 	  <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+
+    <mapping class="model.User"/>
+    <mapping class="model.Product"/>
+    <mapping class="model.Cart"/>
+    <mapping class="model.CartItem"/>
+    <mapping class="model.Transaction"/>
   </session-factory>
 </hibernate-configuration>
