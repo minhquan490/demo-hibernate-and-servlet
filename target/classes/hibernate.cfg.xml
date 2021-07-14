@@ -20,6 +20,7 @@
 
     <mapping class="model.User"/>
     <mapping class="model.Product"/>
+    <mapping class="model.Category"/>
     <mapping class="model.Cart"/>
     <mapping class="model.CartItem"/>
     <mapping class="model.Transaction"/>

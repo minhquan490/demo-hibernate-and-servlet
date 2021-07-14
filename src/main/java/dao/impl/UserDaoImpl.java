@@ -42,16 +42,13 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(long id) throws SQLException {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete User U where U.id = :id";
             User user = session.get(User.class, id);
             if (user != null) {
-                Query query = session.createQuery(hql).setParameter("id", id);
-                query.executeUpdate();
-                session.delete(user);
+                session.remove(user);
                 return true;
             }
             transaction.commit();
@@ -84,7 +81,7 @@ public class UserDaoImpl implements UserDao{
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM User U WHERE U.id = :id";
+            String hql = "FROM User U WHERE U.user_id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             user = (User) query.getSingleResult();
@@ -105,18 +102,18 @@ public class UserDaoImpl implements UserDao{
     @Override
     public List<User> search(String username) {
         Transaction transaction = null;
-        List<User> users = null;
+        List<User> listSearchUsers = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.username LIKE :username";
             Query query = session.createQuery(hql);
             query.setParameter("username", "%" + username + "%");
-            users = query.getResultList();
+            listSearchUsers = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return listSearchUsers;
     }
 
     @Override

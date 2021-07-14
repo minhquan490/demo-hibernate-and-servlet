@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class CartItem implements Serializable {
     @Column(name = "cart_item_id", unique = true)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
@@ -30,13 +31,13 @@ public class CartItem implements Serializable {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @Column
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column
+    @Column(name = "unit_price")
     private int unitPrice;
 
-    @Column
+    @Column(name = "total")
     private int total;
 
     public CartItem(int id, Cart cart, Product product, int quantity, int unitPrice, int total) {
