@@ -2,15 +2,18 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -18,21 +21,34 @@ import javax.persistence.Table;
 public class Cart implements Serializable {
     
     @Id
-    @OneToOne(mappedBy = "user")
-    @PrimaryKeyJoinColumn(name = "cart_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id", unique = true)
+    private long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private Set<CartItem> cartItems;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "buy_date")
     private Date buyDate;
 
-    public Cart(User user, Set<CartItem> cartItems, Date buyDate) {
+    public Cart(long id, User user, Set<CartItem> cartItems, Date buyDate) {
         super();
+        this.id = id;
         this.user = user;
         this.cartItems = cartItems;
         this.buyDate = buyDate;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getUser() {

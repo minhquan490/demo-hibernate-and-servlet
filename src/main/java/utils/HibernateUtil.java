@@ -1,35 +1,22 @@
 package utils;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+import model.*;
 
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
-    private static StandardServiceRegistry registry;
-
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            try {
-                registry = new StandardServiceRegistryBuilder().configure().build();
-                MetadataSources sources = new MetadataSources(registry);
-                Metadata metadata = sources.getMetadataBuilder().build();
-                sessionFactory = metadata.getSessionFactoryBuilder().build();
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (registry != null) {
-                    StandardServiceRegistryBuilder.destroy(registry);
-                }
-            }
+    static {
+        try {
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
         }
-        return sessionFactory;
     }
-
-    public static void shutdown() {
-		if (registry != null) {
-			StandardServiceRegistryBuilder.destroy(registry);
-		}
-	}
+    public static Session getSession() throws HibernateException {
+        return sessionFactory.openSession();
+    }
 }

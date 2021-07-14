@@ -19,7 +19,8 @@ public class CartItem implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "cart_item_id", unique = true)
+    private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", nullable = false)
@@ -48,11 +49,11 @@ public class CartItem implements Serializable {
         this.total = total;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

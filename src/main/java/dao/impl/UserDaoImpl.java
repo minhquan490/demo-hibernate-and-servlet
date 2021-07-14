@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public void save(User user) throws SQLException {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public void edit(User user) throws SQLException {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(user);
             transaction.commit();
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public boolean delete(int id) throws SQLException {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "delete User U where U.id = :id";
             User user = session.get(User.class, id);
@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao{
     public User get(String username) {
         Transaction transaction = null;
         User user = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.username = :username";
             Query query = session.createQuery(hql);
@@ -79,10 +79,10 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User get(int id) {
+    public User get(long id) {
         Transaction transaction = null;
         User user = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.id = :id";
             Query query = session.createQuery(hql);
@@ -97,7 +97,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<User> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             return session.createQuery("FROM User", User.class).list();
         }
     }
@@ -106,7 +106,7 @@ public class UserDaoImpl implements UserDao{
     public List<User> search(String username) {
         Transaction transaction = null;
         List<User> users = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.username LIKE :username";
             Query query = session.createQuery(hql);
@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao{
         if (!email.isBlank() && email.matches(EMAIL_VALID)) {
             Transaction transaction = null;
             User user = null;
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            try (Session session = HibernateUtil.getSession()) {
                 transaction = session.beginTransaction();
                 String hql = "FROM User U WHERE U.email = :email";
                 Query query = session.createQuery(hql);
@@ -148,7 +148,7 @@ public class UserDaoImpl implements UserDao{
     public boolean checkUsernameExist(String username) {
         Transaction transaction = null;
         User user = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             String hql = "FROM User U WHERE U.username = :username";
             Query query = (Query) session.createQuery(hql).setParameter("username", username);

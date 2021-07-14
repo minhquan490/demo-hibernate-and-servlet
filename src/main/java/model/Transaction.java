@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,13 +18,14 @@ public class Transaction implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id", unique = true)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @Column(nullable = false)
+    @Column(name = "approval_status")
     private String approvalStatus;
 
     public Transaction(int id, Cart cart, String approvalStatus) {

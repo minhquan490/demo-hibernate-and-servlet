@@ -1,4 +1,4 @@
-package test;
+/*package test;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -22,7 +22,7 @@ public class Main {
 
         int roleId = 2;
         /*System.out.println("Nhap id");
-        int id = Integer.parseInt(input.nextLine());*/
+        int id = Integer.parseInt(input.nextLine());
 
         try {
             Boolean success = userService.register(username, email, password, roleId);
@@ -37,10 +37,11 @@ public class Main {
                 System.out.println("Delete success");
             } else {
                 System.out.println("Failure");
-            }*/
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         input.close();
     }
 }
+*/

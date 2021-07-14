@@ -15,16 +15,16 @@ import org.apache.commons.codec.digest.DigestUtils;
 @Entity
 @Table(name = "User")
 public class User implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "user_id", unique = true)
+    private long id;
 
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "gender")
@@ -39,20 +39,20 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password", columnDefinition = "TEXT")
     private String password;
 
-    @Column(name = "role_id")
+    @Column(name = "role_id", unique = true)
     private int roleId;
 
     public User() {
         super();
     }
 
-    public User(int id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password) {
+    public User(long id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password) {
         super();
         this.id = id;
         this.fullName = fullName;
@@ -72,11 +72,11 @@ public class User implements Serializable {
         this.roleId = roleId;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

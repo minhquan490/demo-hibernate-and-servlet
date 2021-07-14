@@ -76,9 +76,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.0.0.Alpha8</version>
+      <version>5.4.10.Final</version>
     </dependency>
 
     <dependency>
@@ -87,11 +87,18 @@
       <version>3.4.0.GA</version>
     </dependency>
 
-  <dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-api</artifactId>
-    <version>1.7.25</version>
-  </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.0.17.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>5.4.10.Final</version>
+    </dependency>
+
   </dependencies>
 
   <build>

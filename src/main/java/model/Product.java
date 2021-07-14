@@ -15,15 +15,16 @@ public class Product implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "product_id", unique = true)
+    private long id;
 
-    @Column
+    @Column(name = "name_product")
     private String name;
 
-    @Column
+    @Column(name = "price")
     private int price;
 
-    @Column
+    @Column(name = "picture_url")
     private String picture;
 
     public Product(int id, String name, int price, String picture) {
@@ -34,11 +35,11 @@ public class Product implements Serializable {
         this.picture = picture;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
