@@ -90,7 +90,7 @@ public class ProductEditController extends HttpServlet {
                     req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
                     return;
                 }
-                File dir = new File("path/home/quan/DataForProject/Web_1/Upload" + "/");
+                File dir = new File("/home/quan/DataForProject/demo-hibernate-and-servlet/Product" + "/" + product.getName());
                 File file = File.createTempFile("img", ".png", dir);
                 item.write(file);
                 message = "File saved successfully";
