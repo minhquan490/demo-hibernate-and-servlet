@@ -25,61 +25,60 @@ import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
 import utils.Log;
 
-@WebServlet(value = "/admin/product/add")
-public class ProductAddController extends HttpServlet {
+@WebServlet(value = "/admin/product/edit")
+public class ProductEditController extends HttpServlet {
 
-    CategoryService categoryService = new CategoryServiceImpl();
     ProductService productService = new ProductServiceImpl();
-    String message = "";
+    CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Product product = productService.get(Long.parseLong(req.getParameter("idProduct")));
         List<Category> listCategories = categoryService.getAll();
+        req.setAttribute("product", product);
         req.setAttribute("listCategories", listCategories);
-        req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsp/view/admin/jsp/edit-product.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Product product = new Product();
-        String productName = req.getParameter("productName");
-        int price = Integer.parseInt(req.getParameter("price"));
-        Category category = categoryService.get(req.getParameter("categoryName"));
+        String name = req.getParameter("nameProduct");
+        String price = req.getParameter("price");
+        Category category = categoryService.get(req.getParameter("category"));
+        String message = "";
 
-        if (productName.isBlank()) {
-            message = "Name of product is not empty !";
+        if (name.isBlank()) {
+            message = "Product's name is empty";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
             return;
-        } else if (productService.checkProductExist(productName)) {
+        } else if (productService.checkProductExist(name)) {
             message = "Product is duplicate";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
             return;
         } else {
-            product.setName(productName);
+            product.setName(name);
         }
 
-        product.setPrice(price);
-
-        if (category == null) {
-            message = "Category is not empty !";
+        if (price.isBlank()) {
+            message = "Please input price of product";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            return;
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
         } else {
-            product.setCategory(category);
+            product.setPrice(Integer.parseInt(price));
         }
 
         if (!ServletFileUpload.isMultipartContent(req)) {
             message = "Nothing to upload";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/view/admin/view/list-product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
             return;
         }
 
-        FileItemFactory fileItemFactory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(fileItemFactory);
+        FileItemFactory itemFactory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(itemFactory);
 
         try {
             List<FileItem> listItems = upload.parseRequest(req);
@@ -88,37 +87,43 @@ public class ProductAddController extends HttpServlet {
                 if (!contentType.equals("image/png")) {
                     message = "Only png format is supported";
                     req.setAttribute("message", message);
-                    req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+                    req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
                     return;
                 }
-                File dir = new File("/home/quan/DataForProject/demo-hibernate-and-servlet/Product" + "/" + product.getName());
+                File dir = new File("path/home/quan/DataForProject/Web_1/Upload" + "/");
                 File file = File.createTempFile("img", ".png", dir);
                 item.write(file);
-                message = "Save file successfully !";
+                message = "File saved successfully";
                 req.setAttribute("message", message);
-                req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+                req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
                 product.setPicture(file.getPath());
             }
+
         } catch (FileUploadException e) {
-            message = "Upload failure";
+            message = "Upload fail";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
-        } catch (Exception e) {
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
+            Log.getLog(ProductEditController.class, e.getMessage(), e);
+        } catch (Exception ex) {
             message = "Can't save";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
+            Log.getLog(ProductEditController.class, ex.getMessage(), ex);
+        }
+
+        if (category == null) {
+            message = "Please input Category of product";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
+        } else {
+            product.setCategory(category);
         }
 
         try {
-            productService.save(product);
-            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+            productService.edit(product);
         } catch (SQLException e) {
-            message = "Error, check data before save.";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
+            Log.getLog(ProductEditController.class, e.getMessage(), e);
         }
+        resp.sendRedirect(req.getContextPath() + "/admin/product/list");
     }
 }

@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import dao.UserDao;
 import model.User;
 import utils.HibernateUtil;
+import utils.Log;
 
 public class UserDaoImpl implements UserDao{
 
@@ -25,7 +26,7 @@ public class UserDaoImpl implements UserDao{
             session.save(user);
             transaction.commit();
         } catch (Exception e) {
-			e.printStackTrace();
+			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -37,7 +38,7 @@ public class UserDaoImpl implements UserDao{
             session.saveOrUpdate(user);
             transaction.commit();
         } catch (Exception e) {
-			e.printStackTrace();
+			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -53,7 +54,7 @@ public class UserDaoImpl implements UserDao{
             }
             transaction.commit();
         } catch (Exception e) {
-			e.printStackTrace();
+			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
         return false;
     }
@@ -70,7 +71,7 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-			e.printStackTrace();
+			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
         return user;
     }
@@ -87,7 +88,7 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-			e.printStackTrace();
+			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
         return user;
     }
@@ -111,7 +112,7 @@ public class UserDaoImpl implements UserDao{
             listSearchUsers = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
         return listSearchUsers;
     }
@@ -132,11 +133,8 @@ public class UserDaoImpl implements UserDao{
                     return true;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                return false;
+                Log.getLog(UserDaoImpl.class, e.getMessage(), e);
             }
-        } else {
-            return false;
         }
         return false;
     }
@@ -155,8 +153,7 @@ public class UserDaoImpl implements UserDao{
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            Log.getLog(UserDaoImpl.class, e.getMessage(), e);
         }
         return false;
     }

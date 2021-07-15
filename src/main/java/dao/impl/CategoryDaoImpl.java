@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import dao.CategoryDao;
 import model.Category;
 import utils.HibernateUtil;
+import utils.Log;
 
 public class CategoryDaoImpl implements CategoryDao {
 
@@ -22,7 +23,7 @@ public class CategoryDaoImpl implements CategoryDao {
             session.save(category);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -34,7 +35,7 @@ public class CategoryDaoImpl implements CategoryDao {
             session.saveOrUpdate(category);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -50,7 +51,7 @@ public class CategoryDaoImpl implements CategoryDao {
             }
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
         return false;
     }
@@ -67,7 +68,7 @@ public class CategoryDaoImpl implements CategoryDao {
             category = (Category) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
         return category;
     }
@@ -84,7 +85,7 @@ public class CategoryDaoImpl implements CategoryDao {
             category = (Category) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
         return category;
     }
@@ -108,7 +109,7 @@ public class CategoryDaoImpl implements CategoryDao {
             categories = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
         }
         return categories;
     }

@@ -35,6 +35,10 @@ public class Product implements Serializable {
     @Column(name = "picture_url")
     private String picture;
 
+    public Product() {
+        super();
+    }
+
     public Product(long id, String name, Category category, int price, String picture) {
         super();
         this.id = id;

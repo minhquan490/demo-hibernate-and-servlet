@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.UserService;
 import service.impl.UserServiceImpl;
+import utils.Log;
 import utils.SendEmail;
 
 @WebServlet(urlPatterns = "/register")
@@ -53,7 +54,7 @@ public class ResigterController extends HttpServlet {
                     req.getRequestDispatcher("/jsp/view/client/jsp/resigter.jsp").forward(req, resp);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.getLog(ResigterController.class, e.getMessage(), e);
             }
         }
     }

@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import dao.ProductDao;
 import model.Product;
 import utils.HibernateUtil;
+import utils.Log;
 
 public class ProductDaoImpl implements ProductDao{
 
@@ -22,7 +23,7 @@ public class ProductDaoImpl implements ProductDao{
             session.save(product);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -34,7 +35,7 @@ public class ProductDaoImpl implements ProductDao{
             session.saveOrUpdate(product);
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
     }
 
@@ -50,7 +51,7 @@ public class ProductDaoImpl implements ProductDao{
             }
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
         return false;
     }
@@ -67,7 +68,7 @@ public class ProductDaoImpl implements ProductDao{
             product = (Product) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
         return product;
     }
@@ -84,7 +85,7 @@ public class ProductDaoImpl implements ProductDao{
             product = (Product) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
         return product;
     }
@@ -108,7 +109,7 @@ public class ProductDaoImpl implements ProductDao{
             products = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
         return products;
     }
@@ -127,7 +128,7 @@ public class ProductDaoImpl implements ProductDao{
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
         }
         return false;
     }
