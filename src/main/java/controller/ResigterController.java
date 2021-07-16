@@ -27,6 +27,16 @@ public class ResigterController extends HttpServlet {
         String email = req.getParameter("email");
         int roleId = Integer.parseInt(req.getParameter("role_id"));
 
+        try {
+            if (roleId == 1) {
+                roleId = 2;
+            } else {
+                roleId = 2;
+            }
+        } catch (Exception e) {
+            roleId = 2;
+        }
+
         if (userService.checkUsernameExist(username)) {
             message = "Username is existed !";
             req.setAttribute("message", message);

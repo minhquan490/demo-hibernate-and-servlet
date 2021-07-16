@@ -15,7 +15,7 @@ import utils.Log;
 
 @WebServlet(value = "/admin/product/delete")
 public class ProductDeleteController extends HttpServlet {
-    
+
     ProductService productService = new ProductServiceImpl();
 
     @Override

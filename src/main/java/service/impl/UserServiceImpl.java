@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(int id) throws SQLException {
+    public boolean delete(long id) throws SQLException {
         return userDao.delete(id);
     }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(int id) {
+    public User get(long id) {
         return userDao.get(id);
     }
 
