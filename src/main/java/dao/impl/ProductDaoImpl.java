@@ -23,7 +23,7 @@ public class ProductDaoImpl implements ProductDao{
             session.save(product);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao{
             session.saveOrUpdate(product);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -44,16 +44,15 @@ public class ProductDaoImpl implements ProductDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            Product product = session.get(Product.class, id);
-            if (product != null) {
-                session.remove(product);
-                return true;
-            }
+            String hql = "delete Product P where P.product_id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id).executeUpdate();
             transaction.commit();
+            return true;
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+			Log.getLog("ProductDaoImpl", e.getMessage(), e);
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ProductDaoImpl implements ProductDao{
             product = (Product) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
         return product;
     }
@@ -85,7 +84,7 @@ public class ProductDaoImpl implements ProductDao{
             product = (Product) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
         return product;
     }
@@ -94,7 +93,10 @@ public class ProductDaoImpl implements ProductDao{
     public List<Product> getAll() {
         try(Session session = HibernateUtil.getSession()) {
             return session.createQuery("FROM Product", Product.class).list();
+        } catch (Exception e) {
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
+        return null;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class ProductDaoImpl implements ProductDao{
             products = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
         return products;
     }
@@ -128,7 +130,7 @@ public class ProductDaoImpl implements ProductDao{
                 return true;
             }
         } catch (Exception e) {
-            Log.getLog(ProductDaoImpl.class, e.getMessage(), e);
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
         return false;
     }

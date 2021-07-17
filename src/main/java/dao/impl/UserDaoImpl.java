@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao{
             session.save(user);
             transaction.commit();
         } catch (Exception e) {
-			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao{
             session.saveOrUpdate(user);
             transaction.commit();
         } catch (Exception e) {
-			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -47,16 +47,15 @@ public class UserDaoImpl implements UserDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            User user = session.get(User.class, id);
-            if (user != null) {
-                session.remove(user);
-                return true;
-            }
+            String hql = "delete User U where U.user_id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id).executeUpdate();
             transaction.commit();
+            return true;
         } catch (Exception e) {
-			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -71,7 +70,7 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
         return user;
     }
@@ -88,7 +87,7 @@ public class UserDaoImpl implements UserDao{
             user = (User) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-			Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
         return user;
     }
@@ -97,7 +96,10 @@ public class UserDaoImpl implements UserDao{
     public List<User> getAll() {
         try (Session session = HibernateUtil.getSession()) {
             return session.createQuery("FROM User", User.class).list();
+        } catch (Exception e) {
+            Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
+        return null;
     }
 
     @Override
@@ -112,7 +114,7 @@ public class UserDaoImpl implements UserDao{
             listSearchUsers = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+            Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
         return listSearchUsers;
     }
@@ -128,12 +130,12 @@ public class UserDaoImpl implements UserDao{
                 Query query = session.createQuery(hql);
                 query.setParameter("email", email);
                 user = (User) query.getSingleResult();
-                transaction.commit();
                 if (user != null) {
                     return true;
                 }
+                transaction.commit();
             } catch (Exception e) {
-                Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+                Log.getLog("UserDaoImpl", e.getMessage(), e);
             }
         }
         return false;
@@ -148,12 +150,12 @@ public class UserDaoImpl implements UserDao{
             String hql = "FROM User U WHERE U.username = :username";
             Query query = (Query) session.createQuery(hql).setParameter("username", username);
             user = (User) query.getSingleResult();
-            transaction.commit();
             if (user != null) {
                 return true;
             }
+            transaction.commit();
         } catch (Exception e) {
-            Log.getLog(UserDaoImpl.class, e.getMessage(), e);
+            Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
         return false;
     }

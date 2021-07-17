@@ -35,6 +35,7 @@ public class ResigterController extends HttpServlet {
             }
         } catch (Exception e) {
             roleId = 2;
+            Log.getLog("ResigterController", e.getMessage(), e);
         }
 
         if (userService.checkUsernameExist(username)) {
@@ -64,7 +65,7 @@ public class ResigterController extends HttpServlet {
                     req.getRequestDispatcher("/jsp/view/client/jsp/resigter.jsp").forward(req, resp);
                 }
             } catch (Exception e) {
-                Log.getLog(ResigterController.class, e.getMessage(), e);
+                e.printStackTrace();
             }
         }
     }

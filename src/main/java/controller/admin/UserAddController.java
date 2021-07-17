@@ -96,7 +96,7 @@ public class UserAddController extends HttpServlet {
             message = "Can't add user";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-user.jsp").forward(req, resp);
-            Log.getLog(UserAddController.class, e.getMessage(), e);
+            Log.getLog("UserAddController", e.getMessage(), e);
         }
     }
 }

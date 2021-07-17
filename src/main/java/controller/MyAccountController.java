@@ -87,7 +87,7 @@ public class MyAccountController extends HttpServlet {
             message = "Can't edit";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
-            Log.getLog(MyAccountController.class, e.getMessage(), e);
+            Log.getLog("MyAccountController", e.getMessage(), e);
         }
     }
 }

@@ -25,8 +25,8 @@ public class UserDeleteController extends HttpServlet {
             userService.delete(Long.parseLong(id));
             resp.sendRedirect(req.getContextPath() + "/admin/user/list");
         } catch (NumberFormatException | SQLException e) {
-            Log.getLog(UserDeleteController.class, e.getMessage(), e);
             resp.sendRedirect(req.getContextPath() + "/admin/user/list");
+            Log.getLog("UserDeleteController", e.getMessage(), e);
         }
     }
 }

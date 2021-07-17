@@ -23,7 +23,7 @@ public class CategoryDaoImpl implements CategoryDao {
             session.save(category);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -35,7 +35,7 @@ public class CategoryDaoImpl implements CategoryDao {
             session.saveOrUpdate(category);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
     }
 
@@ -44,16 +44,15 @@ public class CategoryDaoImpl implements CategoryDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            Category category = session.get(Category.class, id);
-            if (category != null) {
-                session.remove(category);
-                return true;
-            }
+            String hql = "delete Category C where C.category_id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id).executeUpdate();
             transaction.commit();
+            return true;
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+			Log.getLog("UserDaoImpl", e.getMessage(), e);
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class CategoryDaoImpl implements CategoryDao {
             category = (Category) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
         return category;
     }
@@ -85,7 +84,7 @@ public class CategoryDaoImpl implements CategoryDao {
             category = (Category) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
         return category;
     }
@@ -94,7 +93,10 @@ public class CategoryDaoImpl implements CategoryDao {
     public List<Category> getAll() {
         try(Session session = HibernateUtil.getSession()) {
             return session.createQuery("FROM Category", Category.class).list();
+        } catch (Exception e) {
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
+        return null;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class CategoryDaoImpl implements CategoryDao {
             categories = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog(CategoryDaoImpl.class, e.getMessage(), e);
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
         return categories;
     }

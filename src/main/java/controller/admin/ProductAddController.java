@@ -103,12 +103,12 @@ public class ProductAddController extends HttpServlet {
             message = "Upload failure";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
+            Log.getLog("ProductAddController", e.getMessage(), e);
         } catch (Exception e) {
             message = "Can't save";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
+            Log.getLog("ProductAddController", e.getMessage(), e);
         }
 
         try {
@@ -118,7 +118,7 @@ public class ProductAddController extends HttpServlet {
             message = "Error, check data before save.";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog(ProductAddController.class, e.getMessage(), e);
+            Log.getLog("ProductAddController", e.getMessage(), e);
         }
     }
 }

@@ -25,11 +25,11 @@ public class ProductDeleteController extends HttpServlet {
             productService.delete(Long.parseLong(id));
             resp.sendRedirect(req.getContextPath() + "/admin/product/list");
         } catch (NumberFormatException e) {
-            Log.getLog(ProductDeleteController.class, e.getMessage(), e);
             resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+            Log.getLog("ProductDeleteController", e.getMessage(), e);
         } catch (SQLException e) {
-            Log.getLog(ProductDeleteController.class, e.getMessage(), e);
             resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+            Log.getLog("ProductDeleteController", e.getMessage(), e);
         }
     }
 }

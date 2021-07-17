@@ -103,12 +103,12 @@ public class ProductEditController extends HttpServlet {
             message = "Upload fail";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
-            Log.getLog(ProductEditController.class, e.getMessage(), e);
+            Log.getLog("ProductEditController", e.getMessage(), e);
         } catch (Exception ex) {
             message = "Can't save";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/view/admin/view/edit-product.jsp").forward(req, resp);
-            Log.getLog(ProductEditController.class, ex.getMessage(), ex);
+            Log.getLog("ProductEditController", ex.getMessage(), ex);
         }
 
         if (category == null) {
@@ -122,7 +122,7 @@ public class ProductEditController extends HttpServlet {
         try {
             productService.edit(product);
         } catch (SQLException e) {
-            Log.getLog(ProductEditController.class, e.getMessage(), e);
+            Log.getLog("ProductEditController", e.getMessage(), e);
         }
         resp.sendRedirect(req.getContextPath() + "/admin/product/list");
     }
