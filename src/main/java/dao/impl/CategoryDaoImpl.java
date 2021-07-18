@@ -1,7 +1,9 @@
 package dao.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -10,6 +12,7 @@ import org.hibernate.Transaction;
 
 import dao.CategoryDao;
 import model.Category;
+import model.Product;
 import utils.HibernateUtil;
 import utils.Log;
 
@@ -114,5 +117,13 @@ public class CategoryDaoImpl implements CategoryDao {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
         return categories;
+    }
+
+    @Override
+    public List<Product> getListProducts(Category category) {
+        Set<Product> setProducts = category.getProducts();
+        List<Product> listProducts = new ArrayList<Product>();
+        listProducts.addAll(setProducts);
+        return listProducts;
     }
 }

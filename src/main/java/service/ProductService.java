@@ -6,7 +6,7 @@ import java.util.List;
 import model.Product;
 
 public interface ProductService {
-       
+
     void save(Product product) throws SQLException;
 
     void edit(Product product) throws SQLException;

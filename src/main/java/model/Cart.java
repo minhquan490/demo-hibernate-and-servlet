@@ -20,10 +20,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Cart")
 public class Cart implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id", unique = true)
+    @Column(name = "cart_id", unique = true, columnDefinition = "BIGINT")
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)

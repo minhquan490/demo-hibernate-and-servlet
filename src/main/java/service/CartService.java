@@ -1,4 +1,4 @@
-package dao;
+package service;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import model.Cart;
 import model.CartItem;
 
-public interface CartDao {
+public interface CartService {
 
     void add(Cart cart) throws SQLException;
 

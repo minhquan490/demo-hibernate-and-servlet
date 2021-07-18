@@ -17,10 +17,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Category")
 public class Category implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id", unique = true)
+    @Column(name = "category_id", unique = true, columnDefinition = "BIGINT")
     private long id;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -28,6 +28,9 @@ public class Category implements Serializable {
 
     @Column(name = "category_name")
     private String name;
+
+    public Category() {
+    }
 
     public Category(long id, Set<Product> products, String name) {
         super();

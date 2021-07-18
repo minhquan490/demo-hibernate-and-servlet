@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -34,9 +35,16 @@ public class ProductAddController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
         List<Category> listCategories = categoryService.getAll();
-        req.setAttribute("listCategories", listCategories);
-        req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+        if (listCategories == null) {
+            message = "List categories is null, add category first";
+            session.setAttribute("message", message);
+            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+        } else {
+            req.setAttribute("listCategories", listCategories);
+            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+        }
     }
 
     @Override

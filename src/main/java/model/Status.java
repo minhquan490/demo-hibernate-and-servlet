@@ -13,13 +13,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Transaction")
-public class Transaction implements Serializable {
-    
+@Table(name = "Status")
+public class Status implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_id", unique = true)
-    private int id;
+    @Column(name = "status_id", unique = true, columnDefinition = "BIGINT")
+    private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id", nullable = false)
@@ -28,18 +28,18 @@ public class Transaction implements Serializable {
     @Column(name = "approval_status")
     private String approvalStatus;
 
-    public Transaction(int id, Cart cart, String approvalStatus) {
+    public Status(long id, Cart cart, String approvalStatus) {
         super();
         this.id = id;
         this.cart = cart;
         this.approvalStatus = approvalStatus;
     }
 
-    public int getId() {
+    public long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -17,11 +17,18 @@ import service.impl.ProductServiceImpl;
 public class ProductListController extends HttpServlet {
 
     ProductService productService = new ProductServiceImpl();
+    private String message = "";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> listProducts = productService.getAll();
-        req.setAttribute("listProducts", listProducts);
-        req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
+        if (listProducts == null) {
+            message = "No product in database, add product";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
+        } else {
+            req.setAttribute("listProducts", listProducts);
+            req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
+        }
     }
 }

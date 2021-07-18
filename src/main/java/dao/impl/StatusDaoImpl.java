@@ -1,85 +1,82 @@
 package dao.impl;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import dao.CartDao;
-import model.Cart;
-import model.CartItem;
+import dao.StatusDao;
+import model.Status;
 import utils.HibernateUtil;
 import utils.Log;
 
-public class CartDaoImpl implements CartDao {
+public class StatusDaoImpl implements StatusDao {
 
     @Override
-    public void add(Cart cart) throws SQLException {
+    public void save(Status status) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            session.save(cart);
+            session.save(status);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog("CartDaoImpl", e.getMessage(), e);
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
     }
 
     @Override
-    public void edit(Cart cart) throws SQLException {
+    public void edit(Status status) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(cart);
+            session.saveOrUpdate(status);
             transaction.commit();
         } catch (Exception e) {
-            Log.getLog("CartDaoImpl", e.getMessage(), e);
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(long id) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete Cart C where C.cart_id = :id";
+            String hql = "delete Status S where S.status_id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
-			Log.getLog("CartDaoImpl", e.getMessage(), e);
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
             return false;
         }
     }
 
     @Override
-    public Cart get(long id) {
-        Transaction transaction = null;
-        Cart cart = null;
+    public List<Status> getAll() {
         try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            String hql = "FROM Cart C WHERE C.cart_id = :id";
-            Query query = session.createQuery(hql);
-            query.setParameter("id", id);
-            cart = (Cart) query.getSingleResult();
-            transaction.commit();
+            return session.createQuery("FROM Status", Status.class).list();
         } catch (Exception e) {
-			Log.getLog("UserDaoImpl", e.getMessage(), e);
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
-        return cart;
+        return null;
     }
 
     @Override
-    public List<CartItem> getListCartItems(Cart cart) {
-        Set<CartItem> setCartItems = cart.getCartItems();
-        List<CartItem> listCartItems = new ArrayList<CartItem>();
-        listCartItems.addAll(setCartItems);
-        return listCartItems;
+    public Status find(long id) {
+        Transaction transaction = null;
+        Status status = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            String hql = "FROM Status S WHERE S.status_id = :id";
+            Query query = session.createQuery(hql);
+            status = (Status) query.setParameter("id", id).getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
+        }
+        return status;
     }
 }

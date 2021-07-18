@@ -17,10 +17,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Cart_Item")
 public class CartItem implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id", unique = true)
+    @Column(name = "cart_item_id", unique = true, columnDefinition = "BIGINT")
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
