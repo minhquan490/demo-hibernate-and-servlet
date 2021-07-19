@@ -64,7 +64,7 @@ public class CartDaoImpl implements CartDao {
         Cart cart = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Cart C WHERE C.cart_id = :id";
+            String hql = "FROM Cart C WHERE C.user_id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             cart = (Cart) query.getSingleResult();

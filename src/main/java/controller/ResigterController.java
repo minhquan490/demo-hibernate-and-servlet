@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import model.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 import utils.Log;
@@ -22,6 +24,7 @@ public class ResigterController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
@@ -56,6 +59,7 @@ public class ResigterController extends HttpServlet {
             try {
                 Boolean success = userService.register(username, email, password, roleId);
                 if (success) {
+                    session.setAttribute("user", new User(email, username, password, roleId));
                     SendEmail sendEmail = new SendEmail();
                     sendEmail.sendEmail(email, "Demo Hibernate and Servlet", "Please login to use service");
                     resp.sendRedirect(req.getContextPath() + "/login");
@@ -65,7 +69,7 @@ public class ResigterController extends HttpServlet {
                     req.getRequestDispatcher("/jsp/view/client/jsp/resigter.jsp").forward(req, resp);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.getLog("ResigterController", e.getMessage(), e);
             }
         }
     }

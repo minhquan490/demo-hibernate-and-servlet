@@ -23,7 +23,7 @@ public class CartItem implements Serializable {
     @Column(name = "cart_item_id", unique = true, columnDefinition = "BIGINT")
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
@@ -34,19 +34,18 @@ public class CartItem implements Serializable {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "unit_price")
-    private int unitPrice;
-
     @Column(name = "total")
     private int total;
 
-    public CartItem(int id, Cart cart, Product product, int quantity, int unitPrice, int total) {
+    public CartItem() {
         super();
-        this.id = id;
+    }
+
+    public CartItem(Cart cart, Product product, int quantity, int total) {
+        super();
         this.cart = cart;
         this.product = product;
         this.quantity = quantity;
-        this.unitPrice = unitPrice;
         this.total = total;
     }
 
@@ -80,14 +79,6 @@ public class CartItem implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public int getUnitPrice() {
-        return this.unitPrice;
-    }
-
-    public void setUnitPrice(int unitPrice) {
-        this.unitPrice = unitPrice;
     }
 
     public int getTotal() {

@@ -33,7 +33,9 @@ public class Welcome extends HttpServlet {
             req.setAttribute("listCategories", listCategories);
             req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/jsp/index.jsp");
+            String message = "Login and update product to display for user";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/view/client/jsp/login.jsp").forward(req, resp);
         }
     }
 }

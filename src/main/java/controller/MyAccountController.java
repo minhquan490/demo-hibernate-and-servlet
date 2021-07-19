@@ -25,10 +25,14 @@ public class MyAccountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("idUser");
-        User user = userService.get(Long.parseLong(id));
-        req.setAttribute("user", user);
-        req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
+        if (req.getParameter("idUser") == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        } else {
+            String id = req.getParameter("idUser");
+            User user = userService.get(Long.parseLong(id));
+            req.setAttribute("user", user);
+            req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
+        }
     }
 
     @Override

@@ -22,7 +22,6 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem oldCartItem = cartItemDao.get(newCartItem.getId());
         oldCartItem.setCart(newCartItem.getCart());
         oldCartItem.setProduct(newCartItem.getProduct());
-        oldCartItem.setUnitPrice(newCartItem.getQuantity());
         oldCartItem.setQuantity(newCartItem.getQuantity());
         oldCartItem.setTotal(newCartItem.getTotal());
         cartItemDao.edit(oldCartItem);
