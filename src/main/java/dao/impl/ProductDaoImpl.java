@@ -99,6 +99,7 @@ public class ProductDaoImpl implements ProductDao{
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Product> searchByName(String name) {
         Transaction transaction = null;

@@ -79,4 +79,21 @@ public class StatusDaoImpl implements StatusDao {
         }
         return status;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Status> getListStatusOfUser(long id) {
+        List<Status> listStatus = null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            String hql = "FROM Status S WHERE S.cart_id = :id";
+            Query query = session.createQuery(hql);
+            listStatus = query.setParameter("id", id).getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            Log.getLog("StatusDaoImpl", e.getMessage(), e);
+        }
+        return listStatus;
+    }
 }

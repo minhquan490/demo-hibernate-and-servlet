@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,10 +43,12 @@ public class CartController extends HttpServlet {
             return;
         } else if (user.getAddress() != null && user.getPhone() != null) {
             Cart cart = cartService.get(user.getId());
-            req.setAttribute("cart", cart);
+            List<CartItem> listCartItem = cartItemService.getListCartItemsOfCart(cart);
+            req.setAttribute("listCartItem", listCartItem);
             req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);
             return;
         }
+        resp.sendRedirect(req.getContextPath() + "/welcome");
     }
 
     @Override

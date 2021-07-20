@@ -14,5 +14,7 @@ public interface StatusDao {
 
     List<Status> getAll();
 
+    List<Status> getListStatusOfUser(long id);
+
     Status find(long id);
 }

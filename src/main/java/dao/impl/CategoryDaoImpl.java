@@ -102,6 +102,7 @@ public class CategoryDaoImpl implements CategoryDao {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Category> searchByCategory(String keyword) {
         Transaction transaction = null;

@@ -38,4 +38,9 @@ public class StatusServiceImpl implements StatusService {
     public Status find(long id) {
         return statusDao.find(id);
     }
+
+    @Override
+    public List<Status> getListStatusOfUser(long id) {
+        return statusDao.getListStatusOfUser(id);
+    }
 }

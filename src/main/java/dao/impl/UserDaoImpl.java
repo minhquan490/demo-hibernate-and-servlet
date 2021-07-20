@@ -102,6 +102,7 @@ public class UserDaoImpl implements UserDao{
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<User> search(String username) {
         Transaction transaction = null;

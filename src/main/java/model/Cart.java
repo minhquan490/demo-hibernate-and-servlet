@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,15 +32,11 @@ public class Cart implements Serializable {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<CartItem> cartItems = new HashSet<>();
 
-    @Column(name = "buy_date")
-    private Date buyDate;
-
-    public Cart(long id, User user, Set<CartItem> cartItems, Date buyDate) {
+    public Cart(long id, User user, Set<CartItem> cartItems) {
         super();
         this.id = id;
         this.user = user;
         this.cartItems = cartItems;
-        this.buyDate = buyDate;
     }
 
     public long getId() {
@@ -66,13 +61,5 @@ public class Cart implements Serializable {
 
     public void setCartItems(Set<CartItem> cartItems) {
         this.cartItems = cartItems;
-    }
-
-    public Date getBuyDate() {
-        return this.buyDate;
-    }
-
-    public void setBuyDate(Date buyDate) {
-        this.buyDate = buyDate;
     }
 }

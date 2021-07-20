@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,11 +29,14 @@ public class Status implements Serializable {
     @Column(name = "approval_status")
     private String approvalStatus;
 
-    public Status(long id, Cart cart, String approvalStatus) {
+    @Column(name = "buy_date")
+    private Date buyDate;
+
+    public Status(Cart cart, String approvalStatus, Date buyDate) {
         super();
-        this.id = id;
         this.cart = cart;
         this.approvalStatus = approvalStatus;
+        this.buyDate = buyDate;
     }
 
     public long getId() {
@@ -57,5 +61,13 @@ public class Status implements Serializable {
 
     public void setApprovalStatus(String approvalStatus) {
         this.approvalStatus = approvalStatus;
+    }
+
+    public Date getBuyDate() {
+        return this.buyDate;
+    }
+
+    public void setBuyDate(Date buyDate) {
+        this.buyDate = buyDate;
     }
 }

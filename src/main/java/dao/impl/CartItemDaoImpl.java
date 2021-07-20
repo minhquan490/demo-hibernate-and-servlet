@@ -71,6 +71,7 @@ public class CartItemDaoImpl implements CartItemDao{
         return cartItem;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<CartItem> getListCartItemsOfCart(Cart cart) {
         List<CartItem> listCartItemsOfCart = null;
@@ -86,5 +87,4 @@ public class CartItemDaoImpl implements CartItemDao{
         }
         return listCartItemsOfCart;
     }
-    
 }
