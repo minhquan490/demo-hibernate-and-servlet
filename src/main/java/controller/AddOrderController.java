@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,6 +18,7 @@ import service.CartService;
 import service.StatusService;
 import service.impl.CartServiceImpl;
 import service.impl.StatusServiceImpl;
+import utils.Log;
 
 @WebServlet(value = "/order/add")
 public class AddOrderController extends HttpServlet {
@@ -35,7 +37,11 @@ public class AddOrderController extends HttpServlet {
 
         String approvalStatus = "Processing";
 
-        statusService.save(new Status(cart, approvalStatus, buyDate));
+        try {
+            statusService.save(new Status(cart, approvalStatus, buyDate));
+        } catch (SQLException e) {
+            Log.getLog("AddOrderController", e.getMessage(), e);
+        }
 
         resp.sendRedirect(req.getContextPath() + "/order/list");
     }

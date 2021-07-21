@@ -32,6 +32,9 @@ public class Status implements Serializable {
     @Column(name = "buy_date")
     private Date buyDate;
 
+    public Status() {
+    }
+
     public Status(Cart cart, String approvalStatus, Date buyDate) {
         super();
         this.cart = cart;

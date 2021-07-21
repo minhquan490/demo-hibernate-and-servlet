@@ -1,28 +1,29 @@
-package controller;
+package controller.admin;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Status;
 import service.StatusService;
 import service.impl.StatusServiceImpl;
+import utils.Log;
 
-@WebServlet(value = "/order/list")
-public class ListOrderController extends HttpServlet {
-
+public class OrderDeleteController extends HttpServlet {
+    
     StatusService statusService = new StatusServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("idCart"));
-        List<Status> listStatus = statusService.getListStatusOfUser(id);
-        req.setAttribute("listStatus", listStatus);
-        req.getRequestDispatcher("/jsp/view/client/jsp/order-detail.jps");
+        long id = Long.parseLong(req.getParameter("idStatus"));
+        try {
+            statusService.delete(id);
+        } catch (SQLException e) {
+            Log.getLog("OrderDeleteController", e.getMessage(), e);
+        }
+        resp.sendRedirect(req.getContextPath() + "/admin/order/list");
     }
 }
