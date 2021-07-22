@@ -10,7 +10,8 @@
 
         <body>
             <a href="${pageContext.request.contextPath}/jsp/view/client/jsp/login.jsp">Login</a> <br>
-            <a href="${pageContext.request.contextPath}/jsp/view/client/jsp/register.jsp">Register</a>
+            <a href="${pageContext.request.contextPath}/jsp/view/client/jsp/register.jsp">Register</a> <br>
+            <a href="${pageContext.request.contextPath}/logout">Logout</a>
         </body>
 
         </html>

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Status")
@@ -29,7 +31,8 @@ public class Status implements Serializable {
     @Column(name = "approval_status")
     private String approvalStatus;
 
-    @Column(name = "buy_date")
+    @Column(name = "buy_date", columnDefinition = "DATE")
+    @Temporal(TemporalType.DATE)
     private Date buyDate;
 
     public Status() {

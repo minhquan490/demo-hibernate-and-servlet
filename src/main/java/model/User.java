@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -30,7 +32,8 @@ public class User implements Serializable {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", columnDefinition = "DATE")
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     @Column(name = "address", columnDefinition = "TEXT")
