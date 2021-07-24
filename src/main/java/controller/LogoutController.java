@@ -25,6 +25,6 @@ public class LogoutController extends HttpServlet {
                 break;
             }
         }
-        resp.sendRedirect("/jsp/index.jsp");
+        resp.sendRedirect(req.getContextPath() + "/welcome");
     }
 }

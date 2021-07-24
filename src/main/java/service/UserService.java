@@ -13,9 +13,9 @@ public interface UserService {
 
     boolean delete(long id) throws SQLException;
 
-    User get(String username);
+    User getU(String username);
 
-    User get(long id);
+    User getI(long id);
 
     User login(String username, String password);
 

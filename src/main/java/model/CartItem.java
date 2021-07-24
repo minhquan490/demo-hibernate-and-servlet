@@ -14,13 +14,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Cart_Item")
 public class CartItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id", unique = true, columnDefinition = "BIGINT")
+    @Column(name = "cart_item_id", unique = true)
+    @Type(type = "long")
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

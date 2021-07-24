@@ -53,7 +53,7 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = userService.get(Long.parseLong(req.getParameter("idUser")));
+        User user = userService.getI(Long.parseLong(req.getParameter("idUser")));
 
         if (user.getAddress() == null && user.getPhone() == null) {
             message = "Update your infomation to order";

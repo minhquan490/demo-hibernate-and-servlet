@@ -9,10 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "User")
@@ -20,7 +19,8 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true, columnDefinition = "BIGINT")
+    @Column(name = "user_id", unique = true)
+    @Type(type = "long")
     private long id;
 
     @Column(name = "full_name")
@@ -32,11 +32,12 @@ public class User implements Serializable {
     @Column(name = "gender")
     private String gender;
 
-    @Column(name = "birth_date", columnDefinition = "DATE")
-    @Temporal(TemporalType.DATE)
+    @Column(name = "birth_date")
+    @Type(type = "date")
     private Date birthDate;
 
-    @Column(name = "address", columnDefinition = "TEXT")
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
 
     @Column(name = "phone")
@@ -45,7 +46,8 @@ public class User implements Serializable {
     @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "password", columnDefinition = "TEXT")
+    @Column(name = "password")
+    @Type(type = "text")
     private String password;
 
     @Column(name = "role_id", unique = true)

@@ -18,7 +18,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void edit(Cart newCart) throws SQLException {
-        Cart oldCart = cartDao.get(newCart.getId());
+        Cart oldCart = new Cart();
+        oldCart.setId(newCart.getId());
         oldCart.setUser(newCart.getUser());
         oldCart.setCartItems(newCart.getCartItems());
         cartDao.edit(oldCart);

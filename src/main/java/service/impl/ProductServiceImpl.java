@@ -20,7 +20,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void edit(Product newProduct) throws SQLException {
-        Product oldProduct = productDao.get(newProduct.getId());
+        Product oldProduct = new Product();
+        oldProduct.setId(newProduct.getId());
         oldProduct.setName(newProduct.getName());
         oldProduct.setCategory(newProduct.getCategory());
         oldProduct.setPrice(newProduct.getPrice());

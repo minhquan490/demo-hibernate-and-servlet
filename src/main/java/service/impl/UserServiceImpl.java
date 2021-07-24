@@ -21,7 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(User newUser) throws SQLException {
-        User oldUser = userDao.get(newUser.getId());
+        User oldUser = new User();
+        oldUser.setId(newUser.getId());
         oldUser.setFullName(newUser.getFullName());
         oldUser.setEmail(newUser.getEmail());
         oldUser.setGender(newUser.getGender());
@@ -40,18 +41,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String username) {
-        return userDao.get(username);
+    public User getU(String username) {
+        return userDao.getU(username);
     }
 
     @Override
-    public User get(long id) {
-        return userDao.get(id);
+    public User getI(long id) {
+        return userDao.getI(id);
     }
 
     @Override
     public User login(String username, String password) {
-        User user = this.get(username);
+        User user = this.getU(username);
         String sha256 = DigestUtils.sha256Hex(password);
         if (user != null && sha256.equals(user.getPassword())) {
             return user;

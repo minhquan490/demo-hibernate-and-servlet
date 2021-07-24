@@ -16,13 +16,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "Cart")
 public class Cart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id", unique = true, columnDefinition = "BIGINT")
+    @Column(name = "cart_id", unique = true)
+    @Type(type = "long")
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,6 +34,9 @@ public class Cart implements Serializable {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<CartItem> cartItems = new HashSet<>();
+
+    public Cart() {
+    }
 
     public Cart(long id, User user, Set<CartItem> cartItems) {
         super();

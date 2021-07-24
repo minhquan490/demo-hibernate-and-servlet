@@ -14,12 +14,13 @@ import model.User;
 @WebServlet(value = "/admin")
 public class Admin extends HttpServlet {
 
+    @SuppressWarnings("null")
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String message = "";
         HttpSession session = req.getSession(false);
         User user = (User) session.getAttribute("user");
-        if (user == null || user.getRoleId() != 1) {
+        if (user == null && user.getRoleId() != 1) {
             session.removeAttribute("user");
             message = "Error !";
             req.setAttribute("message", message);

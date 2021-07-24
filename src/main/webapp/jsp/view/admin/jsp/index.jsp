@@ -5,10 +5,12 @@
 
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title>Insert title here</title>
+            <title>Admin Page</title>
         </head>
 
         <body>
+            <a href="${pageContext.request.contextPath}/admin/product/list">Product List</a><br>
+            <a href="${pageContext.request.contextPath}/logout">Log out</a>
 
         </body>
 

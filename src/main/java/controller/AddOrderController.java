@@ -33,11 +33,12 @@ public class AddOrderController extends HttpServlet {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-        Date buyDate = Date.valueOf(dtf.format(now));
+        Date buyDate;
 
         String approvalStatus = "Processing";
 
         try {
+            buyDate = Date.valueOf(dtf.format(now));
             statusService.save(new Status(cart, approvalStatus, buyDate));
         } catch (SQLException e) {
             Log.getLog("AddOrderController", e.getMessage(), e);

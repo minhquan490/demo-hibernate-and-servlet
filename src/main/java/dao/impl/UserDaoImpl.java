@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User get(String username) {
+    public User getU(String username) {
         Transaction transaction = null;
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User get(long id) {
+    public User getI(long id) {
         Transaction transaction = null;
         User user = null;
         try (Session session = HibernateUtil.getSession()) {

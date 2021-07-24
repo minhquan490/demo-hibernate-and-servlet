@@ -12,8 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "Status")
@@ -21,7 +21,8 @@ public class Status implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "status_id", unique = true, columnDefinition = "BIGINT")
+    @Column(name = "status_id", unique = true)
+    @Type(type = "long")
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -31,8 +32,8 @@ public class Status implements Serializable {
     @Column(name = "approval_status")
     private String approvalStatus;
 
-    @Column(name = "buy_date", columnDefinition = "DATE")
-    @Temporal(TemporalType.DATE)
+    @Column(name = "buy_date")
+    @Type(type = "date")
     private Date buyDate;
 
     public Status() {

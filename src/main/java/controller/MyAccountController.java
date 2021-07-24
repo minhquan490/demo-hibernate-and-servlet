@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.User;
 import service.UserService;
@@ -25,44 +26,42 @@ public class MyAccountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getParameter("username") == null) {
+        HttpSession session = req.getSession(false);
+        if (session.getAttribute("user") == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
         } else {
-            String username = req.getParameter("username");
-            User user = userService.get(username);
-            req.setAttribute("user", user);
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("idUser"));
+        HttpSession session = req.getSession(false);
         String fullName = req.getParameter("fullName");
-        String email = req.getParameter("email");
-        String gender = req.getParameter("gender");
         Date birthDate = Date.valueOf(req.getParameter("birthDate"));
+        String gender = req.getParameter("gender");
         String address = req.getParameter("address");
         String phone = req.getParameter("phone");
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
 
-        User user = new User();
+        User user = (User) session.getAttribute("user");
+        User newUser = new User();
 
-        user.setId(id);
+        newUser.setId(user.getId());
 
-        if (fullName.isBlank()) {
+        if (!fullName.isBlank()) {
+            newUser.setFullName(fullName);
+            //req.setAttribute("fullName", user.getFullName());
+            //req.getRequestDispatcher("/jsp/view/client/jsp/test.jsp").forward(req, resp);
+        } else {
             message = "Enter full name";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
             return;
-        } else {
-            user.setFullName(fullName);
         }
 
-        user.setEmail(email);
-        user.setGender(gender);
-        user.setBirthDate(birthDate);
+        newUser.setEmail(user.getEmail());
+        newUser.setGender(gender);
+        newUser.setBirthDate(birthDate);
 
         if (address.isBlank()) {
             message = "Enter address";
@@ -70,7 +69,7 @@ public class MyAccountController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
             return;
         } else {
-            user.setAddress(address);
+            newUser.setAddress(address);
         }
 
         if (phone.isBlank() && phone.matches(PHONE_VALID)) {
@@ -79,14 +78,15 @@ public class MyAccountController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
             return;
         } else {
-            user.setPhone(phone);
+            newUser.setPhone(phone);
         }
 
-        user.setUsername(username);
-        user.setPassword(password);
+        newUser.setUsername(user.getUsername());
+        newUser.setPassword(user.getPassword());
+        newUser.setRoleId(user.getRoleId());
 
         try {
-            userService.edit(user);
+            userService.edit(newUser);
         } catch (SQLException e) {
             message = "Can't edit";
             req.setAttribute("message", message);

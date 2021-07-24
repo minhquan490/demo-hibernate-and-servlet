@@ -13,9 +13,9 @@ public interface UserDao {
 
     boolean delete(long id) throws SQLException;
 
-    User get(String username);
+    User getU(String username);
 
-    User get(long id);
+    User getI(long id);
 
     List<User> getAll();
 

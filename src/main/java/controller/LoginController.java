@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import utils.Log;
 
 @WebServlet(value = "/login")
 public class LoginController extends HttpServlet {
@@ -62,16 +63,18 @@ public class LoginController extends HttpServlet {
             return;
         }
 
-        if (rememberMe.equals("on")) {
-            isRemember = true;
+        try {
+            if (rememberMe.equals("on")) {
+                isRemember = true;
+            }
+        } catch (Exception e) {
+            Log.getLog("LoginController", e.getMessage(), e);
         }
 
         User user = userService.login(username, password);
 
         if (user != null) {
-            message = "Login success !";
             session.setAttribute("user", user);
-            session.setAttribute("message", message);
             if (isRemember) {
                 remember(resp, username);
             }
