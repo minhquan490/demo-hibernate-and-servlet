@@ -11,11 +11,11 @@ public interface UserService {
 
     void edit(User newUser) throws SQLException;
 
-    boolean delete(long id) throws SQLException;
+    boolean delete(String username) throws SQLException;
 
-    User getU(String username);
+    User get(String username);
 
-    User getI(long id);
+    User get(long id);
 
     User login(String username, String password);
 

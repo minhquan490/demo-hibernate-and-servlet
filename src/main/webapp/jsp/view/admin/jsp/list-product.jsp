@@ -18,7 +18,7 @@
                         <c:otherwise>
                             <c:out value="Product" /><br>
                             <table>
-                                <c:forEach items="listProducts" var="product">
+                                <c:forEach items="${listProducts}" var="product">
                                     <tr>
                                         <td>${product.id}</td>
                                         <td>${product.name}</td>
@@ -26,7 +26,7 @@
                                     </tr>
                                 </c:forEach><br> o
                                 <c:out value="Category" />
-                                <c:forEach items="listCategories" var="category">
+                                <c:forEach items="${listCategories}" var="category">
                                     <tr>
                                         <td>${category.id}</td>
                                         <td>${category.name}</td>

@@ -13,18 +13,12 @@ public class Main {
         UserService userService = new UserServiceImpl();
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Username");
+        System.out.println("username");
         String username = input.nextLine();
 
-        User user = userService.getU(username);
+        userService.delete(username);
 
-        if (user != null) {
-            TestEdit.Test(user);
-        } else {
-            System.out.println("Null");
-        }
 
         input.close();
     }
-}
-*/
+}*/

@@ -36,23 +36,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
-        return userDao.delete(id);
+    public boolean delete(String username) throws SQLException {
+        return userDao.delete(username);
     }
 
     @Override
-    public User getU(String username) {
-        return userDao.getU(username);
+    public User get(String username) {
+        return userDao.get(username);
     }
 
     @Override
-    public User getI(long id) {
-        return userDao.getI(id);
+    public User get(long id) {
+        return userDao.get(id);
     }
 
     @Override
     public User login(String username, String password) {
-        User user = this.getU(username);
+        User user = this.get(username);
         String sha256 = DigestUtils.sha256Hex(password);
         if (user != null && sha256.equals(user.getPassword())) {
             return user;

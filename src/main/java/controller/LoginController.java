@@ -28,7 +28,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
             resp.sendRedirect(req.getContextPath() + "/wating");
             return;
@@ -37,9 +37,8 @@ public class LoginController extends HttpServlet {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("username")) {
-                    req.getSession(true);
-                    session.setAttribute("username", cookie.getValue());
-                    resp.sendRedirect(req.getContextPath() + "/wating");
+                    req.setAttribute("username", cookie.getValue());
+                    req.getRequestDispatcher("/jsp/view/client/jsp/login.jsp").forward(req, resp);
                     return;
                 }
             }

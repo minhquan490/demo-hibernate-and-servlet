@@ -159,10 +159,10 @@ public class User implements Serializable {
 
     private String sha256(String password) {
         String sha256 = "";
-        if (password.length() <= 64 && password.length() > 4) {
+        if (password.length() < 64 && password.length() > 4) {
             sha256 = DigestUtils.sha256Hex(password);
         } else {
-            sha256 = "Pass dai qua";
+            password = sha256;
         }
         return sha256;
     }

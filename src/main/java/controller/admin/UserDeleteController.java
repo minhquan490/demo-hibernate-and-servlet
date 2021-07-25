@@ -19,13 +19,12 @@ public class UserDeleteController extends HttpServlet {
     UserService userService = new UserServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("idUser");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
         try {
-            userService.delete(Long.parseLong(id));
+            userService.delete(username);
             resp.sendRedirect(req.getContextPath() + "/admin/user/list");
         } catch (NumberFormatException | SQLException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/user/list");
             Log.getLog("UserDeleteController", e.getMessage(), e);
         }
     }

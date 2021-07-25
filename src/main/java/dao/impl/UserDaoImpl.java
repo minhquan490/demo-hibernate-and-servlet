@@ -43,13 +43,13 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(String username) throws SQLException {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete User U where U.user_id = :id";
+            String hql = "delete User U where U.username = :username";
             Query query = session.createQuery(hql);
-            query.setParameter("id", id).executeUpdate();
+            query.setParameter("username", username).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User getU(String username) {
+    public User get(String username) {
         Transaction transaction = null;
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User getI(long id) {
+    public User get(long id) {
         Transaction transaction = null;
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
