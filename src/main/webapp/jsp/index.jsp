@@ -40,8 +40,16 @@
                         <a href="${pageContext.request.contextPath}/register ">Register</a> <br>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/myaccount">My Account</a>
-                        <a href="${pageContext.request.contextPath}/logout ">Logout</a>
+                        <a href="${pageContext.request.contextPath}/myaccount">My Account</a><br>
+                        <a href="${pageContext.request.contextPath}/logout ">Logout</a><br>
+                        <c:choose>
+                            <c:when test="${roleId == '1'}">
+                                <a href="${pageContext.request.contextPath}/admin ">Admin Page</a>
+                            </c:when>
+                            <c:otherwise>
+                                <c:out value="" />
+                            </c:otherwise>
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
             </body>

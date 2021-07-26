@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Category;
 import model.Product;
+import model.User;
 import service.CategoryService;
 import service.ProductService;
 import service.impl.CategoryServiceImpl;
@@ -24,18 +26,35 @@ public class Welcome extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        List<Product> listProducts = productService.getAll();
-        List<Category> listCategories = categoryService.getAll();
-
-        if (listProducts != null && listCategories != null) {
+        HttpSession session = req.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            try {
+                List<Product> listProducts = productService.getAll();
+                List<Category> listCategories = categoryService.getAll();
+                User user = (User) session.getAttribute("user");
+                String message = "Has User";
+                req.setAttribute("message", message);
+                req.setAttribute("listProducts", listProducts);
+                req.setAttribute("listCategories", listCategories);
+                req.setAttribute("roleId", user.getRoleId());
+                req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
+            } catch (Exception e) {
+                List<Product> listProducts = productService.getAll();
+                List<Category> listCategories = categoryService.getAll();
+                String message = "Exception on User " + e.getMessage();
+                req.setAttribute("message", message);
+                req.setAttribute("listProducts", listProducts);
+                req.setAttribute("listCategories", listCategories);
+                req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
+            }
+        } else {
+            List<Product> listProducts = productService.getAll();
+            List<Category> listCategories = categoryService.getAll();
+            String message = "No User";
+            req.setAttribute("message", message);
             req.setAttribute("listProducts", listProducts);
             req.setAttribute("listCategories", listCategories);
             req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
-        } else {
-            String message = "Login and update product to display for user";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/client/jsp/login.jsp").forward(req, resp);
         }
     }
 }

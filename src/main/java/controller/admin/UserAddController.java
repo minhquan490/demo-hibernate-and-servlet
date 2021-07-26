@@ -37,6 +37,7 @@ public class UserAddController extends HttpServlet {
         String phone = req.getParameter("phone");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        int roleId = Integer.parseInt(req.getParameter("roleId"));
 
         User user = new User();
 
@@ -89,9 +90,11 @@ public class UserAddController extends HttpServlet {
         }
 
         user.setPassword(password);
+        user.setRoleId(roleId);
 
         try {
             userService.save(user);
+            resp.sendRedirect(req.getContextPath() + "/admin/user/list");
         } catch (Exception e) {
             message = "Can't add user";
             req.setAttribute("message", message);

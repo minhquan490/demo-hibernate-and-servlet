@@ -16,23 +16,11 @@
                         <input type="text" name="fullName" value="${user.fullName}"><br>Email:&nbsp;
                         <input type="text" name="email" value="${user.email}" readonly><br>Gender:&nbsp;
                         <select name="gender">
-                            <c:choose>
-                                <c:when test="${empty user.gender}">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:when test="${user.gender == 'male'}">
-                                        <option value="${user.gender}"><c:out value="${user.gender}"/></option>
-                                        <option value="female">Female</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="male">Male</option>
-                                        <option value="${user.gender}"><c:out value="${user.gender}"/></option>
-                                    </c:otherwise>
-                                </c:otherwise>
-                            </c:choose>
-                        </select><br>Birth Date:&nbsp;
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>&nbsp;
+                        <c:out value="${user.gender}" />
+                        <br>Birth Date:&nbsp;
                         <input type="date" name="birthDate" value="${user.birthDate}"><br>Address:&nbsp;
                         <input type="text" name="address" value="${user.address}"><br>Phone:&nbsp;
                         <input type="text" name="phone" value="${user.phone}"><br>
