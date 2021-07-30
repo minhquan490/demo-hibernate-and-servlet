@@ -3,21 +3,20 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import model.User;
-import service.UserService;
-import service.impl.UserServiceImpl;
-import utils.Log;
+import service.CategoryService;
+import service.ProductService;
+import service.impl.CategoryServiceImpl;
+import service.impl.ProductServiceImpl;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-        UserService userService = new UserServiceImpl();
+        ProductService productService = new ProductServiceImpl();
         Scanner input = new Scanner(System.in);
 
-        System.out.println("username");
-        String username = input.nextLine();
+        System.out.println("code");
+        String code = input.nextLine();
 
-        userService.delete(username);
-
+        productService.delete(code);
 
         input.close();
     }

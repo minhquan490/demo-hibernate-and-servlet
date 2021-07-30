@@ -40,13 +40,13 @@ public class ProductDaoImpl implements ProductDao{
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(String code) throws SQLException {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete Product P where P.product_id = :id";
+            String hql = "delete Product P where P.code = :code";
             Query query = session.createQuery(hql);
-            query.setParameter("id", id).executeUpdate();
+            query.setParameter("code", code).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class ProductDaoImpl implements ProductDao{
         Product product = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Product P WHERE P.product_id = :id";
+            String hql = "FROM Product P WHERE P.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", idProduct);
             product = (Product) query.getSingleResult();
@@ -78,7 +78,7 @@ public class ProductDaoImpl implements ProductDao{
         Product product = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Product P WHERE P.name_product = :name";
+            String hql = "FROM Product P WHERE P.name = :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
             product = (Product) query.getSingleResult();
@@ -106,7 +106,7 @@ public class ProductDaoImpl implements ProductDao{
         List<Product> products = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Product P WHERE P.name_product LIKE :name";
+            String hql = "FROM Product P WHERE P.name LIKE :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", "%" + name + "%");
             products = query.getResultList();
@@ -134,5 +134,22 @@ public class ProductDaoImpl implements ProductDao{
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
         return false;
+    }
+
+    @Override
+    public Product getCode(String code) {
+        Transaction transaction = null;
+        Product product = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            String hql = "FROM Product P WHERE P.code = :code";
+            Query query = session.createQuery(hql);
+            query.setParameter("code", code);
+            product = (Product) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
+        }
+        return product;
     }
 }

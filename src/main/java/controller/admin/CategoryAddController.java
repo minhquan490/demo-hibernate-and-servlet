@@ -55,5 +55,6 @@ public class CategoryAddController extends HttpServlet {
         } catch (SQLException e) {
             Log.getLog("CategoryAddController", e.getMessage(), e);
         }
+        resp.sendRedirect(req.getContextPath() + "/admin/product/list");
     }
 }

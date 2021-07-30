@@ -20,6 +20,11 @@ public class CategoryDeleteController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("idCategory"));
         try {
             categoryService.delete(id);

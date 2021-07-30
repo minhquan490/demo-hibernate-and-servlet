@@ -43,7 +43,7 @@ public class StatusDaoImpl implements StatusDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete Status S where S.status_id = :id";
+            String hql = "delete Status S where S.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Category;
 import model.Product;
@@ -21,10 +22,11 @@ public class ProductListController extends HttpServlet {
 
     CategoryService categoryService = new CategoryServiceImpl();
     ProductService productService = new ProductServiceImpl();
-    private String message = "";
+    private String message;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(false);
         List<Category> listCategories = categoryService.getAll();
         List<Product> listProducts = productService.getAll();
         if (listProducts == null) {
@@ -32,9 +34,9 @@ public class ProductListController extends HttpServlet {
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
         } else {
-            req.setAttribute("listCategories", listCategories);
-            req.setAttribute("listProducts", listProducts);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
+            session.setAttribute("listCategories", listCategories);
+            session.setAttribute("listProducts", listProducts);
+            resp.sendRedirect(req.getContextPath() + "/jsp/view/admin/jsp/list-product.jsp");
         }
     }
 }

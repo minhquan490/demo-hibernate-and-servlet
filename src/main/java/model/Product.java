@@ -25,6 +25,10 @@ public class Product implements Serializable {
     @Type(type = "long")
     private long id;
 
+    @Column(name = "product_code", unique = true)
+    @Type(type = "text")
+    private String code;
+
     @Column(name = "name_product")
     private String name;
 
@@ -42,9 +46,9 @@ public class Product implements Serializable {
         super();
     }
 
-    public Product(long id, String name, Category category, int price, String picture) {
-        super();
+    public Product(long id, String code, String name, Category category, int price, String picture) {
         this.id = id;
+        this.code = code;
         this.name = name;
         this.category = category;
         this.price = price;
@@ -57,6 +61,14 @@ public class Product implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -90,4 +102,5 @@ public class Product implements Serializable {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+   
 }

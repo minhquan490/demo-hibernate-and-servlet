@@ -10,41 +10,37 @@
             </head>
 
             <body>
-                <c:choose>
-                    <c:when test="${not empty message}">
-                        <c:out value="${message}" /><br>
-                    </c:when>
-                    <c:otherwise>
-                        <c:out value="Product" /><br>
-                        <table>
-                            <c:forEach items="${listProducts}" var="product">
-                                <tr>
-                                    <td>${product.name}</td>
-                                    <td>${product.price}</td>
-                                </tr>
-                            </c:forEach>
-                        </table><br><br>
-                        <c:out value="Category" /><br>
-                        <table>
-                            <c:forEach items="${listCategories}" var="category">
-                                <tr>
-                                    <td>${category.name}</td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </c:otherwise>
-                </c:choose><br>
+                <c:out value="Product" /><br>
+                <table>
+                    <c:forEach items="${listProducts}" var="product">
+                        <tr>
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>${product.category.name}</td>
+                            <td>${product.price}</td>
+                            <td>${product.picture}</td>
+                        </tr>
+                    </c:forEach>
+                </table><br><br>
+                <c:out value="Category" /><br>
+                <table>
+                    <c:forEach items="${listCategories}" var="category">
+                        <tr>
+                            <td>${category.name}</td>
+                        </tr>
+                    </c:forEach>
+                </table><br>
                 <c:choose>
                     <c:when test="${empty sessionScope.user}">
                         <a href="${pageContext.request.contextPath}/login">Login</a> <br>
-                        <a href="${pageContext.request.contextPath}/register ">Register</a> <br>
+                        <a href="${pageContext.request.contextPath}/register">Register</a> <br>
                     </c:when>
                     <c:otherwise>
                         <a href="${pageContext.request.contextPath}/myaccount">My Account</a><br>
-                        <a href="${pageContext.request.contextPath}/logout ">Logout</a><br>
+                        <a href="${pageContext.request.contextPath}/logout">Logout</a><br>
                         <c:choose>
                             <c:when test="${roleId == '1'}">
-                                <a href="${pageContext.request.contextPath}/admin ">Admin Page</a>
+                                <a href="${pageContext.request.contextPath}/admin">Admin Page</a>
                             </c:when>
                             <c:otherwise>
                                 <c:out value="" />

@@ -44,7 +44,7 @@ public class CartItemDaoImpl implements CartItemDao{
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete Cart_Item CI where CI.cart_item_id = :id";
+            String hql = "delete Cart_Item CI where CI.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();

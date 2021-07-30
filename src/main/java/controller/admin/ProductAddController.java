@@ -1,22 +1,22 @@
 package controller.admin;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import javax.servlet.http.Part;
 
 import model.Category;
 import model.Product;
@@ -25,9 +25,14 @@ import service.ProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
 import utils.Log;
+import utils.Random;
 
 @WebServlet(value = "/admin/product/add")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024
+        * 100)
 public class ProductAddController extends HttpServlet {
+
+    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/Product/";
 
     CategoryService categoryService = new CategoryServiceImpl();
     ProductService productService = new ProductServiceImpl();
@@ -35,12 +40,11 @@ public class ProductAddController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
         List<Category> listCategories = categoryService.getAll();
         if (listCategories == null) {
-            message = "List categories is null, add category first";
-            session.setAttribute("message", message);
-            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+            message = "Add category before add product";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
         } else {
             req.setAttribute("listCategories", listCategories);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
@@ -50,17 +54,16 @@ public class ProductAddController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Product product = new Product();
-        String productName = req.getParameter("productName");
-        int price = Integer.parseInt(req.getParameter("price"));
-        Category category = categoryService.get(req.getParameter("categoryName"));
+        String productCode = Random.getID("product");
+        String productName = getValue(req.getPart("productName"));
+        String price = getValue(req.getPart("price"));
+        Category category = categoryService.get(getValue(req.getPart("categoryName")));
+        Part filePart = req.getPart("image");
+
+        product.setCode(productCode);
 
         if (productName.isBlank()) {
-            message = "Name of product is not empty !";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            return;
-        } else if (productService.checkProductExist(productName)) {
-            message = "Product is duplicate";
+            message = "Name of product is not empty";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
             return;
@@ -68,10 +71,17 @@ public class ProductAddController extends HttpServlet {
             product.setName(productName);
         }
 
-        product.setPrice(price);
+        if (price.isBlank()) {
+            message = "Price is not empty";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+            return;
+        } else {
+            product.setPrice(Integer.parseInt(price));
+        }
 
         if (category == null) {
-            message = "Category is not empty !";
+            message = "Category is not empty";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
             return;
@@ -79,54 +89,50 @@ public class ProductAddController extends HttpServlet {
             product.setCategory(category);
         }
 
-        if (!ServletFileUpload.isMultipartContent(req)) {
-            message = "Nothing to upload";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/view/admin/view/list-product.jsp").forward(req, resp);
-            return;
-        }
-
-        FileItemFactory fileItemFactory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(fileItemFactory);
-
-        try {
-            List<FileItem> listItems = upload.parseRequest(req);
-            for (FileItem item : listItems) {
-                String contentType = item.getContentType();
-                if (!contentType.equals("image/png")) {
-                    message = "Only png format is supported";
-                    req.setAttribute("message", message);
-                    req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-                    return;
+        switch (filePart.getContentType()) {
+            case "image/png":
+                String fileNamePNG = productCode;
+                File dirPNG = new File(UPLOAD_LOCATION);
+                File uploadPNG = File.createTempFile(fileNamePNG, ".png", dirPNG);
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, uploadPNG.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                File dir = new File("/home/quan/DataForProject/demo-hibernate-and-servlet/Product" + "/" + product.getName());
-                File file = File.createTempFile("img", ".png", dir);
-                item.write(file);
-                message = "Save file successfully !";
+                resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+                product.setPicture(uploadPNG.getAbsolutePath());
+                break;
+            case "image/jpeg":
+                String fileNameJPG = productCode;
+                File dirJPG = new File(UPLOAD_LOCATION);
+                File uploadJPG = File.createTempFile(fileNameJPG, ".jpg", dirJPG);
+                try (InputStream input = filePart.getInputStream()) {
+                    Files.copy(input, uploadJPG.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+                resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+                product.setPicture(uploadJPG.getAbsolutePath());
+                break;
+            default:
+                message = "File much be .jpg or .png";
                 req.setAttribute("message", message);
                 req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-                product.setPicture(file.getPath());
-            }
-        } catch (FileUploadException e) {
-            message = "Upload failure";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog("ProductAddController", e.getMessage(), e);
-        } catch (Exception e) {
-            message = "Can't save";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
-            Log.getLog("ProductAddController", e.getMessage(), e);
+                break;
         }
 
         try {
             productService.save(product);
-            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
-        } catch (SQLException e) {
-            message = "Error, check data before save.";
+            message = "Save success";
             req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
+        } catch (SQLException e) {
             Log.getLog("ProductAddController", e.getMessage(), e);
         }
+    }
+
+    private static String getValue(Part part) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(part.getInputStream(), "UTF-8"));
+        StringBuilder value = new StringBuilder();
+        char[] buffer = new char[1024];
+        for(int length = 0; (length = reader.read(buffer)) > 0;) {
+            value.append(buffer, 0, length);
+        }
+        return value.toString();
     }
 }

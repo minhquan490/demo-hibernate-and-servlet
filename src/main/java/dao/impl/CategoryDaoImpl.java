@@ -47,13 +47,13 @@ public class CategoryDaoImpl implements CategoryDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "delete Category C where C.category_id = :id";
+            String hql = "delete Category C where C.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
-			Log.getLog("UserDaoImpl", e.getMessage(), e);
+			Log.getLog("CategoryDaoImpl", e.getMessage(), e);
             return false;
         }
     }
@@ -64,7 +64,7 @@ public class CategoryDaoImpl implements CategoryDao {
         Category category = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Category C WHERE C.category_id = :id";
+            String hql = "FROM Category C WHERE C.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             category = (Category) query.getSingleResult();
@@ -81,7 +81,7 @@ public class CategoryDaoImpl implements CategoryDao {
         Category category = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Category C WHERE C.category_name = :name";
+            String hql = "FROM Category C WHERE C.name = :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", name);
             category = (Category) query.getSingleResult();
@@ -109,7 +109,7 @@ public class CategoryDaoImpl implements CategoryDao {
         List<Category> categories = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Category C WHERE C.category_name LIKE :name";
+            String hql = "FROM Category C WHERE C.name LIKE :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", keyword);
             categories = query.getResultList();

@@ -1,6 +1,8 @@
 package controller.admin;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
 import utils.Log;
@@ -20,15 +23,18 @@ public class ProductDeleteController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("idProduct");
+        req.getRequestDispatcher("/jsp/view/admin/jsp/list-product.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String code = req.getParameter("code");
         try {
-            productService.delete(Long.parseLong(id));
+            Product product = productService.getCode(code);
+            Files.deleteIfExists(Paths.get(product.getPicture()));
+            productService.delete(code);
             resp.sendRedirect(req.getContextPath() + "/admin/product/list");
-        } catch (NumberFormatException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
-            Log.getLog("ProductDeleteController", e.getMessage(), e);
         } catch (SQLException e) {
-            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
             Log.getLog("ProductDeleteController", e.getMessage(), e);
         }
     }

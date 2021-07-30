@@ -1,6 +1,8 @@
 package service.impl;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,17 +22,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void edit(Product newProduct) throws SQLException {
-        Product oldProduct = new Product();
-        oldProduct.setId(newProduct.getId());
+        Product oldProduct = productDao.getCode(newProduct.getCode());
         oldProduct.setName(newProduct.getName());
         oldProduct.setCategory(newProduct.getCategory());
         oldProduct.setPrice(newProduct.getPrice());
         if (newProduct.getPicture() != null) {
-            String fileName = oldProduct.getPicture();
-            final String dir = "/home/quan/DataForProject/demo-hibernate-and-servlet";
-            File file = new File(dir + "/" + fileName);
-            if (file.exists()) {
-                file.delete();
+            try {
+                Files.deleteIfExists(Paths.get(oldProduct.getPicture()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             oldProduct.setPicture(newProduct.getPicture());
         }
@@ -38,8 +38,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean delete(long idProduct) throws SQLException {
-        return productDao.delete(idProduct);
+    public boolean delete(String code) throws SQLException {
+        return productDao.delete(code);
     }
 
     @Override
@@ -64,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean checkProductExist(String name) {
-        return checkProductExist(name);
+        return productDao.checkProductExist(name);
+    }
+
+    @Override
+    public Product getCode(String code) {
+        return productDao.getCode(code);
     }
 }

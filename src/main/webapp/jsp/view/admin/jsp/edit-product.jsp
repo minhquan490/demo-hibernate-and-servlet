@@ -5,11 +5,24 @@
 
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <title>Insert title here</title>
+            <title>Edit Product</title>
         </head>
 
         <body>
-
+            <div>
+                <form action="${pageContext.request.contextPath}/admin/product/edit" method="post" enctype="multipart/form-data">
+                    ID:&nbsp;
+                    <input type="text" name="idProduct" value="${product.id}" readonly><br> Product Code:&nbsp;
+                    <input type="text" name="code" value="${product.code}" readonly><br>Name:&nbsp;
+                    <input type="text" name="productName" value="${product.name}" readonly><br> Price:&nbsp;
+                    <input type="text" name="price" value="${product.price}"><br>Category:&nbsp;
+                    <input type="text" name="categoryName" value="${product.category.name}" readonly>
+                    <br>Picture:&nbsp;
+                    <input type="file" name="image" value="${product.picture}"><br>
+                    <button type="submit">Edit Product</button>
+                </form>
+                <a href="${pageContext.request.contextPath}/admin/product/list" type="button">View list product</a>
+            </div>
         </body>
 
         </html>

@@ -11,11 +11,13 @@ public interface ProductService {
 
     void edit(Product product) throws SQLException;
 
-    boolean delete(long idProduct) throws SQLException;
+    boolean delete(String code) throws SQLException;
 
     Product get(long idProduct);
 
     Product get(String name);
+
+    Product getCode(String code);
 
     List<Product> getAll();
 

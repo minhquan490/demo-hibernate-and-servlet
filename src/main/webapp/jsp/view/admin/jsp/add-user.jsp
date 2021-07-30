@@ -24,7 +24,8 @@
                 <input type="password" name="password"><br>Role ID:&nbsp;
                 <input type="text" name="roleId"><br>
                 <button type="submit">Add</button>
-            </form>
+            </form><br>
+            <a href="${pageContext.request.conTextPath}/admin/product/list">View list product</a>
         </body>
 
         </html>

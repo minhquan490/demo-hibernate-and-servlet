@@ -10,15 +10,6 @@
             </head>
 
             <body>
-                Message: &nbsp;
-                <c:choose>
-                    <c:when test="${empty message}">
-                        <c:out value="No message" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:out value="${message}" />
-                    </c:otherwise>
-                </c:choose><br><br>
                 <a href="${pageContext.request.contextPath}/admin/user/list">List User</a><br><br><br>
                 <a href="${pageContext.request.contextPath}/admin/product/list">Product List</a><br><br><br>
                 <a href="${pageContext.request.contextPath}/welcome">Client Page</a><br><br><br>
