@@ -1,10 +1,7 @@
 package service.impl;
 
-import java.util.List;
-
 import dao.CartItemDao;
 import dao.impl.CartItemDaoImpl;
-import model.Cart;
 import model.CartItem;
 import service.CartItemService;
 
@@ -21,7 +18,6 @@ public class CartItemServiceImpl implements CartItemService {
     public void edit(CartItem newCartItem) {
         CartItem oldCartItem = new CartItem();
         oldCartItem.setId(newCartItem.getId());
-        oldCartItem.setCart(newCartItem.getCart());
         oldCartItem.setProduct(newCartItem.getProduct());
         oldCartItem.setQuantity(newCartItem.getQuantity());
         oldCartItem.setTotal(newCartItem.getTotal());
@@ -36,10 +32,5 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItem get(long id) {
         return cartItemDao.get(id);
-    }
-
-    @Override
-    public List<CartItem> getListCartItemsOfCart(Cart cart) {
-        return cartItemDao.getListCartItemsOfCart(cart);
     }
 }

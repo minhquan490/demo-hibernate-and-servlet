@@ -1,8 +1,5 @@
 package dao;
 
-import java.util.List;
-
-import model.Cart;
 import model.CartItem;
 
 public interface CartItemDao {
@@ -14,6 +11,4 @@ public interface CartItemDao {
     boolean delete(long id);
 
     CartItem get(long id);
-
-    List<CartItem> getListCartItemsOfCart(Cart cart);
 }

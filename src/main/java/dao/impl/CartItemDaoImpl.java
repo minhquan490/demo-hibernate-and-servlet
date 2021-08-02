@@ -1,14 +1,11 @@
 package dao.impl;
 
-import java.util.List;
-
 import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import dao.CartItemDao;
-import model.Cart;
 import model.CartItem;
 import utils.HibernateUtil;
 import utils.Log;
@@ -61,7 +58,7 @@ public class CartItemDaoImpl implements CartItemDao{
         CartItem cartItem = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Cart_Item CI WHERE CI.cart_item_id = :id";
+            String hql = "FROM Cart_Item CI WHERE CI.id = :id";
             Query query = session.createQuery(hql);
             cartItem = (CartItem) query.setParameter("id", id).getSingleResult();
             transaction.commit();
@@ -69,22 +66,5 @@ public class CartItemDaoImpl implements CartItemDao{
             Log.getLog("CartItemDaoImpl", e.getMessage(), e);
         }
         return cartItem;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<CartItem> getListCartItemsOfCart(Cart cart) {
-        List<CartItem> listCartItemsOfCart = null;
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            String hql = "FORM Cart_Item CI WHERE CI.cart_id = :id";
-            Query query = session.createQuery(hql);
-            listCartItemsOfCart = query.setParameter("id", cart.getId()).getResultList();
-            transaction.commit();
-        } catch (Exception e) {
-            Log.getLog("CartItemDaoImpl", e.getMessage(), e);
-        }
-        return listCartItemsOfCart;
     }
 }

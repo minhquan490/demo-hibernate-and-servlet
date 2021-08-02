@@ -3,6 +3,7 @@ package service;
 import java.sql.SQLException;
 
 import model.Cart;
+import model.User;
 
 public interface CartService {
 
@@ -12,5 +13,5 @@ public interface CartService {
 
     boolean delete(long id) throws SQLException;
 
-    Cart get(long id);
+    Cart get(User user);
 }

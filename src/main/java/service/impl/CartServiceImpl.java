@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import dao.CartDao;
 import dao.impl.CartDaoImpl;
 import model.Cart;
+import model.User;
 import service.CartService;
 
 public class CartServiceImpl implements CartService {
@@ -31,7 +32,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart get(long id) {
-        return cartDao.get(id);
+    public Cart get(User user) {
+        return cartDao.get(user);
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import dao.CartDao;
 import model.Cart;
+import model.User;
 import utils.HibernateUtil;
 import utils.Log;
 
@@ -55,14 +56,14 @@ public class CartDaoImpl implements CartDao {
     }
 
     @Override
-    public Cart get(long id) {
+    public Cart get(User user) {
         Transaction transaction = null;
         Cart cart = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Cart C WHERE C.user_id = :id";
+            String hql = "FROM Cart C WHERE C.user = :user";
             Query query = session.createQuery(hql);
-            query.setParameter("id", id);
+            query.setParameter("user", user);
             cart = (Cart) query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {

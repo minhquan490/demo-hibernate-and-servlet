@@ -14,11 +14,31 @@
                 <table>
                     <c:forEach items="${listProducts}" var="product">
                         <tr>
-                            <td>${product.id}</td>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Picture</th>
+                        </tr>
+                        <tr>
+                            <td>${product.code}</td>
                             <td>${product.name}</td>
                             <td>${product.category.name}</td>
                             <td>${product.price}</td>
-                            <td>${product.picture}</td>
+                            <td><img src="${pageContext.request.contextPath}/images/${product.picture}" alt="${product.name}" width="50" height="75"></td>
+                            <td>
+                                <div>
+                                    <form action="${pageContext.request.contextPath}/product/detail" method="get">
+                                        <input type="hidden" name="idProduct" value="${product.id}">
+                                        <button type="submit">View</button>
+                                    </form>
+                                </div>
+                                <div>
+                                    <form action="" method="get">
+
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table><br><br>

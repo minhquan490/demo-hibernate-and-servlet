@@ -24,7 +24,7 @@ public class ProductDetailController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long idProduct = Long.parseLong(req.getParameter("id_product"));
+        long idProduct = Long.parseLong(req.getParameter("idProduct"));
         Product product = productService.get(idProduct);
         List<Category> listCategories = categoryService.getAll();
         req.setAttribute("product", product);

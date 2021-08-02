@@ -32,7 +32,7 @@ import utils.Random;
         * 100)
 public class ProductAddController extends HttpServlet {
 
-    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/Product/";
+    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/";
 
     CategoryService categoryService = new CategoryServiceImpl();
     ProductService productService = new ProductServiceImpl();
@@ -91,24 +91,24 @@ public class ProductAddController extends HttpServlet {
 
         switch (filePart.getContentType()) {
             case "image/png":
-                String fileNamePNG = productCode;
+                String fileNamePNG = productCode + "-";
                 File dirPNG = new File(UPLOAD_LOCATION);
                 File uploadPNG = File.createTempFile(fileNamePNG, ".png", dirPNG);
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, uploadPNG.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
                 resp.sendRedirect(req.getContextPath() + "/admin/product/list");
-                product.setPicture(uploadPNG.getAbsolutePath());
+                product.setPicture(uploadPNG.getName());
                 break;
             case "image/jpeg":
-                String fileNameJPG = productCode;
+                String fileNameJPG = productCode + "-";
                 File dirJPG = new File(UPLOAD_LOCATION);
                 File uploadJPG = File.createTempFile(fileNameJPG, ".jpg", dirJPG);
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, uploadJPG.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
+                product.setPicture(uploadJPG.getName());
                 resp.sendRedirect(req.getContextPath() + "/admin/product/list");
-                product.setPicture(uploadJPG.getAbsolutePath());
                 break;
             default:
                 message = "File much be .jpg or .png";
