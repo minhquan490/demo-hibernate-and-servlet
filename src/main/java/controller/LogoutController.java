@@ -17,6 +17,7 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         session.removeAttribute("user");
+        session.setMaxInactiveInterval(0);
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -26,5 +27,6 @@ public class LogoutController extends HttpServlet {
             }
         }
         resp.sendRedirect(req.getContextPath() + "/welcome");
+        return;
     }
 }

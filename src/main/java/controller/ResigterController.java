@@ -28,7 +28,7 @@ public class ResigterController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");

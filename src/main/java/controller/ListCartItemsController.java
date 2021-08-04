@@ -37,6 +37,6 @@ public class ListCartItemsController extends HttpServlet {
             listCartItems.add(cartItem);
         }
         req.setAttribute("listCartItems", listCartItems);
-        req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp");
+        req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);;
     }
 }

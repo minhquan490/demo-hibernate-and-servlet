@@ -34,8 +34,10 @@
                                     </form>
                                 </div>
                                 <div>
-                                    <form action="" method="get">
-
+                                    <form action="${pageContext.request.contextPath}/cart" method="get">
+                                        <input type="hidden" name="idProduct" value="${product.id}">
+                                        <input type="text" name="quantity">
+                                        <input type="submit" name="act" value="add">
                                     </form>
                                 </div>
                             </td>
@@ -56,6 +58,7 @@
                         <a href="${pageContext.request.contextPath}/register">Register</a> <br>
                     </c:when>
                     <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/cart/list">My Cart</a><br>
                         <a href="${pageContext.request.contextPath}/myaccount">My Account</a><br>
                         <a href="${pageContext.request.contextPath}/logout">Logout</a><br>
                         <c:choose>

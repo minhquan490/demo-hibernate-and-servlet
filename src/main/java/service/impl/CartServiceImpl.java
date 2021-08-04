@@ -19,9 +19,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void edit(Cart newCart) throws SQLException {
-        Cart oldCart = new Cart();
-        oldCart.setId(newCart.getId());
-        oldCart.setUser(newCart.getUser());
+        Cart oldCart = cartDao.get(newCart.getId());
         oldCart.setCartItems(newCart.getCartItems());
         cartDao.edit(oldCart);
     }
@@ -34,5 +32,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart get(User user) {
         return cartDao.get(user);
+    }
+
+    @Override
+    public Cart get(long id) {
+        return cartDao.get(id);
     }
 }

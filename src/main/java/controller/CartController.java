@@ -47,6 +47,7 @@ public class CartController extends HttpServlet {
                 newCart.setUser(user);
                 try {
                     cartService.add(newCart);
+                    session.setAttribute("cart", cart);
                     doPost(req, resp);
                     return;
                 } catch (SQLException e) {
@@ -62,7 +63,7 @@ public class CartController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String act = req.getParameter("act");
+        String act = getParameter(req, "act");
 
         switch (act) {
             case "add":
@@ -79,7 +80,6 @@ public class CartController extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
-
             case "delete":
                 try {
                     deleteCartItem(req, resp);
@@ -92,8 +92,7 @@ public class CartController extends HttpServlet {
 
     private void addToCart(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Cart cart = cartService.get(user);
+        Cart cart = (Cart) session.getAttribute("cart");
         Product product = productService.get(Long.valueOf(req.getParameter("idProduct")));
 
         int quantity = Integer.parseInt(req.getParameter("quantity"));
@@ -104,10 +103,8 @@ public class CartController extends HttpServlet {
 
         Set<CartItem> cartItems = cart.getCartItems();
         cartItems.add(cartItem);
-        cart.setCartItems(cartItems);
-        cart.setId(user.getId());
-        cart.setUser(user);
 
+        cart.setCartItems(cartItems);
         cartService.edit(cart);
 
         resp.sendRedirect(req.getContextPath() + "/cart/list");
@@ -115,8 +112,7 @@ public class CartController extends HttpServlet {
 
     private void editCartItem(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Cart cart = cartService.get(user);
+        Cart cart = (Cart) session.getAttribute("cart");
         Product product = productService.getCode(req.getParameter("code"));
 
         long idCartItem = Long.parseLong(req.getParameter("idCartItem"));
@@ -125,8 +121,7 @@ public class CartController extends HttpServlet {
         Set<CartItem> cartItems = cart.getCartItems();
         for (CartItem cartItem : cartItems) {
             if (cartItem.getId() == idCartItem) {
-                cartItem.setId(cartItem.getId());
-                cartItem.setProduct(product);
+                cartItem.setId(idCartItem);
                 cartItem.setQuantity(quantity);
                 cartItem.setTotal(product.getPrice() * quantity);
                 cartItemService.edit(cartItem);
@@ -138,17 +133,25 @@ public class CartController extends HttpServlet {
 
     private void deleteCartItem(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ServletException {
         HttpSession session = req.getSession(false);
-        User user = (User) session.getAttribute("user");
-        Cart cart = cartService.get(user);
+        Cart cart = (Cart) session.getAttribute("cart");
 
         long idCartItem = Long.parseLong(req.getParameter("idCartItem"));
 
         Set<CartItem> cartItems = cart.getCartItems();
         for (CartItem cartItem : cartItems) {
             if (cartItem.getId() == idCartItem) {
+                cartItems.remove(cartItem);
                 cartItemService.delete(cartItem.getId());
             }
         }
+
+        cart.setCartItems(cartItems);
+        cartService.edit(cart);
+
         resp.sendRedirect(req.getContextPath() + "/cart/list");
+    }
+
+    private String getParameter(HttpServletRequest req, String parameter) throws IOException, ServletException {
+        return req.getParameter(parameter);
     }
 }

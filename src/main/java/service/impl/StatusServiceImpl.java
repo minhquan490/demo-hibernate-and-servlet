@@ -19,8 +19,7 @@ public class StatusServiceImpl implements StatusService {
 
     @Override
     public void edit(Status newStatus) throws SQLException {
-        Status oldStatus = new Status();
-        oldStatus.setId(newStatus.getId());
+        Status oldStatus = statusDao.find(newStatus.getId());
         oldStatus.setCart(newStatus.getCart());
         oldStatus.setApprovalStatus(newStatus.getApprovalStatus());
         statusDao.edit(oldStatus);

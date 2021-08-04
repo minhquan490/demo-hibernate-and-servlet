@@ -16,9 +16,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public void edit(CartItem newCartItem) {
-        CartItem oldCartItem = new CartItem();
-        oldCartItem.setId(newCartItem.getId());
-        oldCartItem.setProduct(newCartItem.getProduct());
+        CartItem oldCartItem = cartItemDao.get(newCartItem.getId());
         oldCartItem.setQuantity(newCartItem.getQuantity());
         oldCartItem.setTotal(newCartItem.getTotal());
         cartItemDao.edit(oldCartItem);

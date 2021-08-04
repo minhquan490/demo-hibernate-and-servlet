@@ -19,8 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void edit(Category newCategory) throws SQLException {
-        Category oldCategory = new Category();
-        oldCategory.setId(newCategory.getId());
+        Category oldCategory = categoryDao.get(newCategory.getId());
         oldCategory.setName(newCategory.getName());
         oldCategory.setProducts(newCategory.getProducts());
         categoryDao.edit(oldCategory);

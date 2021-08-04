@@ -14,4 +14,6 @@ public interface CartService {
     boolean delete(long id) throws SQLException;
 
     Cart get(User user);
+
+    Cart get(long id);
 }

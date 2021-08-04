@@ -21,6 +21,7 @@ public class StatusDaoImpl implements StatusDao {
             transaction = session.beginTransaction();
             session.save(status);
             transaction.commit();
+            session.close();
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
@@ -33,6 +34,7 @@ public class StatusDaoImpl implements StatusDao {
             transaction = session.beginTransaction();
             session.saveOrUpdate(status);
             transaction.commit();
+            session.close();
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
@@ -47,6 +49,7 @@ public class StatusDaoImpl implements StatusDao {
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();
+            session.close();
             return true;
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);
@@ -74,6 +77,7 @@ public class StatusDaoImpl implements StatusDao {
             Query query = session.createQuery(hql);
             status = (Status) query.setParameter("id", id).getSingleResult();
             transaction.commit();
+            session.close();
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
@@ -91,6 +95,7 @@ public class StatusDaoImpl implements StatusDao {
             Query query = session.createQuery(hql);
             listStatus = query.setParameter("id", id).getResultList();
             transaction.commit();
+            session.close();
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);
         }
