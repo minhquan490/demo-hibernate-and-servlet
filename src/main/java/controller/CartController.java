@@ -24,6 +24,7 @@ import service.impl.CartServiceImpl;
 import service.impl.ProductServiceImpl;
 import service.impl.UserServiceImpl;
 import utils.Log;
+import utils.Random;
 
 @WebServlet(value = "/cart")
 public class CartController extends HttpServlet {
@@ -95,10 +96,11 @@ public class CartController extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("cart");
         Product product = productService.get(Long.valueOf(req.getParameter("idProduct")));
 
+        long id = Long.parseLong(Random.getID("user"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
         int total = product.getPrice() * quantity;
 
-        CartItem cartItem = new CartItem(cart, product, quantity, total);
+        CartItem cartItem = new CartItem(id, cart, product, quantity, total);
         cartItemService.save(cartItem);
 
         Set<CartItem> cartItems = cart.getCartItems();

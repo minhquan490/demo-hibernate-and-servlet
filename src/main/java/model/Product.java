@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -21,20 +24,20 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", unique = true)
+    @Column(name = "product_id")
     @Type(type = "long")
     private long id;
 
-    @Column(name = "product_code", unique = true)
+    @Column(name = "product_code")
     @Type(type = "text")
     private String code;
 
     @Column(name = "name_product")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_category", joinColumns = {@JoinColumn(name = "category_id")}, inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    private Set<Category> categories = new HashSet<>();
 
     @Column(name = "price")
     private int price;
@@ -46,11 +49,13 @@ public class Product implements Serializable {
         super();
     }
 
-    public Product(long id, String code, String name, Category category, int price, String picture) {
+
+    public Product(long id, String code, String name, Set<Category> categories, int price, String picture) {
+        super();
         this.id = id;
         this.code = code;
         this.name = name;
-        this.category = category;
+        this.categories = categories;
         this.price = price;
         this.picture = picture;
     }
@@ -79,12 +84,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return this.category;
+    public Set<Category> getCategories() {
+        return this.categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
     public int getPrice() {
@@ -102,5 +107,4 @@ public class Product implements Serializable {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-   
 }

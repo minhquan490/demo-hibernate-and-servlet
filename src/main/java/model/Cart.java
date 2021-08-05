@@ -24,7 +24,7 @@ public class Cart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id", unique = true)
+    @Column(name = "cart_id")
     @Type(type = "long")
     private long id;
 

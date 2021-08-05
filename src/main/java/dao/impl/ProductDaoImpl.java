@@ -22,7 +22,6 @@ public class ProductDaoImpl implements ProductDao{
             transaction = session.beginTransaction();
             session.save(product);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
@@ -35,7 +34,6 @@ public class ProductDaoImpl implements ProductDao{
             transaction = session.beginTransaction();
             session.saveOrUpdate(product);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
@@ -50,7 +48,6 @@ public class ProductDaoImpl implements ProductDao{
             Query query = session.createQuery(hql);
             query.setParameter("code", code).executeUpdate();
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
 			Log.getLog("ProductDaoImpl", e.getMessage(), e);
@@ -69,7 +66,6 @@ public class ProductDaoImpl implements ProductDao{
             query.setParameter("id", idProduct);
             product = (Product) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
@@ -87,7 +83,6 @@ public class ProductDaoImpl implements ProductDao{
             query.setParameter("name", name);
             product = (Product) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
@@ -116,7 +111,6 @@ public class ProductDaoImpl implements ProductDao{
             query.setParameter("name", "%" + name + "%");
             products = query.getResultList();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }
@@ -133,7 +127,6 @@ public class ProductDaoImpl implements ProductDao{
             Query query = session.createQuery(hql);
             product = (Product) query.getSingleResult();
             transaction.commit();
-            session.close();
             if (product != null) {
                 return true;
             }
@@ -154,7 +147,6 @@ public class ProductDaoImpl implements ProductDao{
             query.setParameter("code", code);
             product = (Product) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("ProductDaoImpl", e.getMessage(), e);
         }

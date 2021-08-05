@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -78,7 +79,9 @@ public class ProductEditController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
             return;
         } else {
-            product.setCategory(category);
+            Set<Category> categories = product.getCategories();
+            categories.add(category);
+            product.setCategories(categories);
         }
 
         switch (filePart.getContentType()) {

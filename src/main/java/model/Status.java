@@ -22,7 +22,7 @@ public class Status implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "status_id", unique = true)
+    @Column(name = "status_id")
     @Type(type = "long")
     private long id;
 

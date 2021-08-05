@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -54,12 +55,14 @@ public class ProductAddController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Product product = new Product();
+        long id = Long.parseLong(Random.getID("user"));
         String productCode = Random.getID("product");
         String productName = getValue(req.getPart("productName"));
         String price = getValue(req.getPart("price"));
         Category category = categoryService.get(getValue(req.getPart("categoryName")));
         Part filePart = req.getPart("image");
 
+        product.setId(id);
         product.setCode(productCode);
 
         if (productName.isBlank()) {
@@ -86,7 +89,9 @@ public class ProductAddController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
             return;
         } else {
-            product.setCategory(category);
+            Set<Category> categories = product.getCategories();
+            categories.add(category);
+            product.setCategories(categories);
         }
 
         switch (filePart.getContentType()) {

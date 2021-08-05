@@ -25,7 +25,6 @@ public class CategoryDaoImpl implements CategoryDao {
             transaction = session.beginTransaction();
             session.save(category);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
@@ -38,7 +37,6 @@ public class CategoryDaoImpl implements CategoryDao {
             transaction = session.beginTransaction();
             session.saveOrUpdate(category);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
@@ -53,7 +51,6 @@ public class CategoryDaoImpl implements CategoryDao {
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
 			Log.getLog("CategoryDaoImpl", e.getMessage(), e);
@@ -72,7 +69,6 @@ public class CategoryDaoImpl implements CategoryDao {
             query.setParameter("id", id);
             category = (Category) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
@@ -90,7 +86,6 @@ public class CategoryDaoImpl implements CategoryDao {
             query.setParameter("name", name);
             category = (Category) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }
@@ -119,7 +114,6 @@ public class CategoryDaoImpl implements CategoryDao {
             query.setParameter("name", keyword);
             categories = query.getResultList();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CategoryDaoImpl", e.getMessage(), e);
         }

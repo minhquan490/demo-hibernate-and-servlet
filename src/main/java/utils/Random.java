@@ -7,19 +7,33 @@ public class Random {
 
         switch (type) {
             case "product":
-                typeID = "P-";
+                typeID = "P-" + ID();
                 break;
             case "user":
-                typeID = "U-";
+                typeID = UID();
                 break;
             case "card":
-                typeID = "C-";
+                typeID = "C-" + ID();
                 break;
             case "order":
-                typeID = "HD-";
+                typeID = "HD-" + ID();
                 break;
         }
+        return typeID;
+    }
 
+    private static String UID() {
+        String AlphaString = "0123456789";
+        StringBuilder sb = new  StringBuilder(6);
+
+        for (int i = 0; i < 6; i++) {
+            int index = (int) (AlphaString.length() * Math.random());
+            sb.append(AlphaString.charAt(index));
+        }
+        return sb.toString();
+    }
+
+    private static String ID() {
         String AlphaString = "0123456789" + "QWERTYUIOPASDFGHJKLZXCVBNM" + "qwertyuiopasdfghjklzxcvbnm";
         StringBuilder sb = new StringBuilder(6);
 
@@ -27,6 +41,6 @@ public class Random {
             int index = (int) (AlphaString.length() * Math.random());
             sb.append(AlphaString.charAt(index));
         }
-        return typeID + sb.toString();
+        return sb.toString();
     }
 }

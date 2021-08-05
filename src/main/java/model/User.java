@@ -19,14 +19,14 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true)
+    @Column(name = "user_id")
     @Type(type = "long")
     private long id;
 
     @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "gender")
@@ -43,14 +43,14 @@ public class User implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     @Type(type = "text")
     private String password;
 
-    @Column(name = "role_id", unique = true)
+    @Column(name = "role_id")
     private int roleId;
 
     public User() {
@@ -69,8 +69,9 @@ public class User implements Serializable {
         this.password = sha256(password);
     }
 
-    public User(String email, String username, String password, int roleId) {
+    public User(long id, String email, String username, String password, int roleId) {
         super();
+        this.id = id;
         this.email = email;
         this.username = username;
         this.password = sha256(password);

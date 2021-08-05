@@ -23,7 +23,7 @@ public interface UserService {
 
     List<User> search(String username);
 
-    boolean register(String username, String email, String password, int roleId) throws SQLException;
+    boolean register(User user) throws SQLException;
 
     boolean checkEmailExist(String email);
 

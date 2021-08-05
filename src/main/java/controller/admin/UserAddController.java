@@ -13,6 +13,7 @@ import model.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 import utils.Log;
+import utils.Random;
 
 @WebServlet(value = "/admin/user/add")
 public class UserAddController extends HttpServlet {
@@ -29,6 +30,7 @@ public class UserAddController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(Random.getID("user"));
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
         String gender = req.getParameter("gender");
@@ -40,6 +42,8 @@ public class UserAddController extends HttpServlet {
         int roleId = Integer.parseInt(req.getParameter("roleId"));
 
         User user = new User();
+
+        user.setId(id);
 
         if (fullName.isBlank()) {
             message = "Enter full name";

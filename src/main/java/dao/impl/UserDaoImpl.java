@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao{
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
@@ -38,7 +37,6 @@ public class UserDaoImpl implements UserDao{
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
@@ -53,7 +51,6 @@ public class UserDaoImpl implements UserDao{
             Query query = session.createQuery(hql);
             query.setParameter("username", username).executeUpdate();
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
@@ -72,7 +69,6 @@ public class UserDaoImpl implements UserDao{
             query.setParameter("username", username);
             user = (User) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
@@ -85,12 +81,11 @@ public class UserDaoImpl implements UserDao{
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM User U WHERE U.user_id = :id";
+            String hql = "FROM User U WHERE U.id = :id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             user = (User) query.getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
@@ -119,7 +114,6 @@ public class UserDaoImpl implements UserDao{
             query.setParameter("username", "%" + username + "%");
             listSearchUsers = query.getResultList();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("UserDaoImpl", e.getMessage(), e);
         }
@@ -141,7 +135,6 @@ public class UserDaoImpl implements UserDao{
                     return true;
                 }
                 transaction.commit();
-                session.close();
             } catch (Exception e) {
                 Log.getLog("UserDaoImpl", e.getMessage(), e);
             }
@@ -162,7 +155,6 @@ public class UserDaoImpl implements UserDao{
                 return true;
             }
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("UserDaoImpl", e.getMessage(), e);
         }

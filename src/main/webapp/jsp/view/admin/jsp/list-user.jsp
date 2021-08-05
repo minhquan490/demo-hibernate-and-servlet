@@ -44,6 +44,9 @@
                             <th>
                                 <c:out value="Role ID" />
                             </th>
+                            <th>
+                                <c:out value="Action" />
+                            </th>
                         </tr>
                         <c:forEach items="${listUsers}" var="user">
                             <tr>
@@ -77,16 +80,18 @@
                                 <td>
                                     <c:out value="${user.roleId}" />
                                 </td>
+                                <td>
+                                    <div>
+                                        <form action="${pageContext.request.contextPath}/admin/user/delete" method="post">
+                                            <input type="hidden" name="username" value="${user.username}">
+                                            <button type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         </c:forEach>
                     </table><br><br>
                     <a href="${pageContext.request.contextPath}/admin/user/add">Add User</a><br><br>
-                </div>
-                <div>
-                    <form action="${pageContext.request.contextPath}/admin/user/delete" method="post">
-                        <input type="text" name="username">
-                        <button type="submit">Delete</button>
-                    </form>
                 </div>
             </body>
 

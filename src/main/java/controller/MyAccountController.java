@@ -44,12 +44,9 @@ public class MyAccountController extends HttpServlet {
         String phone = req.getParameter("phone");
 
         User user = (User) session.getAttribute("user");
-        User newUser = new User();
-
-        newUser.setId(user.getId());
 
         if (!fullName.isBlank()) {
-            newUser.setFullName(fullName);
+            user.setFullName(fullName);
             //req.setAttribute("fullName", user.getFullName());
             //req.getRequestDispatcher("/jsp/view/client/jsp/test.jsp").forward(req, resp);
         } else {
@@ -59,9 +56,8 @@ public class MyAccountController extends HttpServlet {
             return;
         }
 
-        newUser.setEmail(user.getEmail());
-        newUser.setGender(gender);
-        newUser.setBirthDate(birthDate);
+        user.setGender(gender);
+        user.setBirthDate(birthDate);
 
         if (address.isBlank()) {
             message = "Enter address";
@@ -69,7 +65,7 @@ public class MyAccountController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
             return;
         } else {
-            newUser.setAddress(address);
+            user.setAddress(address);
         }
 
         if (phone.isBlank() && phone.matches(PHONE_VALID)) {
@@ -78,15 +74,11 @@ public class MyAccountController extends HttpServlet {
             req.getRequestDispatcher("/jsp/view/client/jsp/myaccount.jsp").forward(req, resp);
             return;
         } else {
-            newUser.setPhone(phone);
+            user.setPhone(phone);
         }
 
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(user.getPassword());
-        newUser.setRoleId(user.getRoleId());
-
         try {
-            userService.edit(newUser);
+            userService.edit(user);
         } catch (SQLException e) {
             message = "Can't edit";
             req.setAttribute("message", message);

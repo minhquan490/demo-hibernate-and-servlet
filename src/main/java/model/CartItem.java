@@ -21,7 +21,7 @@ public class CartItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id", unique = true)
+    @Column(name = "cart_item_id")
     @Type(type = "long")
     private long id;
 
@@ -43,8 +43,9 @@ public class CartItem implements Serializable {
         super();
     }
 
-    public CartItem(Cart cart, Product product, int quantity, int total) {
+    public CartItem(long id, Cart cart, Product product, int quantity, int total) {
         super();
+        this.id = id;
         this.cart = cart;
         this.product = product;
         this.quantity = quantity;

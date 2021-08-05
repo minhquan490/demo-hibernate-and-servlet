@@ -16,6 +16,7 @@ import service.ProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
 import utils.Log;
+import utils.Random;
 
 @WebServlet(value = "/admin/category/add")
 public class CategoryAddController extends HttpServlet {
@@ -41,6 +42,9 @@ public class CategoryAddController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("nameCategory");
         Category category = new Category();
+
+        long id = Long.parseLong(Random.getID("user"));
+        category.setId(id);
 
         if (name.isBlank()) {
             message = "Enter name of category";

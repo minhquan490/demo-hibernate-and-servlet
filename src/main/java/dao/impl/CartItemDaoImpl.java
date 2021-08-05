@@ -19,7 +19,6 @@ public class CartItemDaoImpl implements CartItemDao{
             transaction = session.beginTransaction();
             session.save(cartItem);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CartItemDaoImpl", e.getMessage(), e);
         }
@@ -32,7 +31,6 @@ public class CartItemDaoImpl implements CartItemDao{
             transaction = session.beginTransaction();
             session.saveOrUpdate(cartItem);
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CartItemDaoImpl", e.getMessage(), e);
         }
@@ -47,7 +45,6 @@ public class CartItemDaoImpl implements CartItemDao{
             Query query = session.createQuery(hql);
             query.setParameter("id", id).executeUpdate();
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             Log.getLog("CartItemDaoImpl", e.getMessage(), e);
@@ -65,7 +62,6 @@ public class CartItemDaoImpl implements CartItemDao{
             Query query = session.createQuery(hql);
             cartItem = (CartItem) query.setParameter("id", id).getSingleResult();
             transaction.commit();
-            session.close();
         } catch (Exception e) {
             Log.getLog("CartItemDaoImpl", e.getMessage(), e);
         }

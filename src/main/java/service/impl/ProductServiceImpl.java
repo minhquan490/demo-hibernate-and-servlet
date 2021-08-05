@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     public void edit(Product newProduct) throws SQLException {
         Product oldProduct = productDao.getCode(newProduct.getCode());
         oldProduct.setName(newProduct.getName());
-        oldProduct.setCategory(newProduct.getCategory());
+        oldProduct.setCategories(newProduct.getCategories());
         oldProduct.setPrice(newProduct.getPrice());
         if (newProduct.getPicture() != null) {
             try {

@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(User newUser) throws SQLException {
-        User oldUser = new User();
-        oldUser.setId(newUser.getId());
+        User oldUser = userDao.get(newUser.getId());
         oldUser.setFullName(newUser.getFullName());
         oldUser.setEmail(newUser.getEmail());
         oldUser.setGender(newUser.getGender());
@@ -71,12 +70,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(String username, String email, String password, int roleId) throws SQLException {
-        if (userDao.checkUsernameExist(username) || userDao.checkEmailExist(email)) {
+    public boolean register(User user) throws SQLException {
+        if (userDao.checkUsernameExist(user.getUsername()) || userDao.checkEmailExist(user.getEmail())) {
             return false;
         } else {
-            userDao.save(new User(email, username, password, roleId));
-            return true;
+            try {
+                userDao.save(user);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
         }
     }
 
