@@ -16,12 +16,11 @@
                     Name:&nbsp;
                     <input type="text" name="productName"><br> Price:&nbsp;
                     <input type="text" name="price"><br>Category:&nbsp;
-                    <select>
+                    <select name="categoryName">
                         <c:forEach items="${sessionScope.listCategories}" var="category">
                             <option value="${category.name}"><c:out value="${category.name}"/></option>
                         </c:forEach>
                     </select>&nbsp;
-                    <input type="text" name="categoryName">
                     <br>Picture:&nbsp;
                     <input type="file" name="image"><br>
                     <button type="submit">Add Product</button>

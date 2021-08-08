@@ -6,6 +6,7 @@ import java.util.List;
 import dao.CategoryDao;
 import dao.impl.CategoryDaoImpl;
 import model.Category;
+import model.Product;
 import service.CategoryService;
 
 public class CategoryServiceImpl implements CategoryService {
@@ -48,5 +49,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> searchByCategory(String keyword) {
         return categoryDao.searchByCategory(keyword);
+    }
+
+    @Override
+    public List<Product> getListProductsFromCategory(String name) {
+        return categoryDao.getListProductsFromCategory(name);
     }
 }

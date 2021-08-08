@@ -1,9 +1,7 @@
 package dao.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Query;
 
@@ -111,7 +109,7 @@ public class CategoryDaoImpl implements CategoryDao {
             transaction = session.beginTransaction();
             String hql = "FROM Category C WHERE C.name LIKE :name";
             Query query = session.createQuery(hql);
-            query.setParameter("name", keyword);
+            query.setParameter("name", "%" + keyword + "%");
             categories = query.getResultList();
             transaction.commit();
         } catch (Exception e) {
@@ -120,11 +118,20 @@ public class CategoryDaoImpl implements CategoryDao {
         return categories;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public List<Product> getListProducts(Category category) {
-        Set<Product> setProducts = category.getProducts();
-        List<Product> listProducts = new ArrayList<Product>();
-        listProducts.addAll(setProducts);
+    public List<Product> getListProductsFromCategory(String name) {
+        Transaction transaction = null;
+        List<Product> listProducts = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            String hql = "select distinct P from Product P join P.categories cate where cate.name = :category_name";
+            Query query = session.createQuery(hql).setParameter("category_name", name);
+            listProducts = query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            Log.getLog("CategoryDaoImpl", e.getMessage(), e);
+        }
         return listProducts;
     }
 }

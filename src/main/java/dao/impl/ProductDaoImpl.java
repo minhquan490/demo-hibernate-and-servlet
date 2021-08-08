@@ -106,7 +106,7 @@ public class ProductDaoImpl implements ProductDao{
         List<Product> products = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Product P WHERE P.name LIKE :name";
+            String hql = "SELECT P FROM Product P WHERE P.name LIKE :name";
             Query query = session.createQuery(hql);
             query.setParameter("name", "%" + name + "%");
             products = query.getResultList();

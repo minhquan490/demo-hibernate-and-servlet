@@ -12,15 +12,15 @@
             <body>
                 <c:out value="Product" /><br>
                 <table>
-                    <c:forEach items="${listProducts}" var="product">
-                        <tr>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Picture</th>
-                        </tr>
-                        <tr>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Picture</th>
+                    </tr>
+                    <tr>
+                        <c:forEach items="${listProducts}" var="product">
                             <td>${product.code}</td>
                             <td>${product.name}</td>
                             <td>
@@ -45,17 +45,34 @@
                                     </form>
                                 </div>
                             </td>
-                        </tr>
-                    </c:forEach>
-                </table><br><br>
+                        </c:forEach>
+                    </tr>
+                </table><br>
+                <div>
+                    <form action="${pageContext.request.contextPath}/search" method="post">
+                        <input type="text" name="productName">
+                        <button type="submit">Search</button>
+                    </form>
+                </div><br>
                 <c:out value="Category" /><br>
                 <table>
                     <c:forEach items="${listCategories}" var="category">
                         <tr>
-                            <td>${category.name}</td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/search" method="get">
+                                    <input type="text" value="${category.name}" name="nameCategory" readonly>&nbsp;
+                                    <button type="submit">Search</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table><br>
+                <div>
+                    <form action="${pageContext.request.contextPath}/search" method="post">
+                        <input type="text" name="nameProduct">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
                 <c:choose>
                     <c:when test="${empty sessionScope.user}">
                         <a href="${pageContext.request.contextPath}/login">Login</a> <br>

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.Category;
+import model.Product;
 
 public interface CategoryService {
 
@@ -20,4 +21,6 @@ public interface CategoryService {
 	List<Category> getAll();
 
 	List<Category> searchByCategory(String keyword);
+	
+	List<Product> getListProductsFromCategory(String name);
 }

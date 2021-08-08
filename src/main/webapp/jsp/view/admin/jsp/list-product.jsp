@@ -46,7 +46,7 @@
                                             </c:forEach>
                                         </td>
                                         <td>${product.price}</td>
-                                        <td>${product.picture}</td>
+                                        <td><img src="${pageContext.request.contextPath}/images/${product.picture}" alt="${product.name}" width="50" height="75"></td>
                                         <td>
                                             <form action="${pageContext.request.contextPath}/admin/product/delete" method="post">
                                                 <input type="hidden" name="code" value="${product.code}">

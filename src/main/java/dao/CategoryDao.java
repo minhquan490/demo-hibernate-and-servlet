@@ -22,5 +22,5 @@ public interface CategoryDao {
 
 	List<Category> searchByCategory(String keyword);
 
-	List<Product> getListProducts(Category category);
+	List<Product> getListProductsFromCategory(String name);
 }

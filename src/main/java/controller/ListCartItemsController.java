@@ -32,11 +32,23 @@ public class ListCartItemsController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         Cart cart = cartService.get(user);
         List<CartItem> listCartItems = new ArrayList<CartItem>();
-        Set<CartItem> cartItems = cart.getCartItems();
-        for (CartItem cartItem : cartItems) {
-            listCartItems.add(cartItem);
+        Set<CartItem> cartItems;
+        try {
+            cartItems = cart.getCartItems();
+        } catch (Exception e) {
+            cartItems = null;
         }
-        req.setAttribute("listCartItems", listCartItems);
-        req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);;
+        if (cartItems == null) {
+            String message = "Your cart is empty";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);
+            return;
+        } else {
+            for (CartItem cartItem : cartItems) {
+                listCartItems.add(cartItem);
+            }
+            req.setAttribute("listCartItems", listCartItems);
+        }
+        req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);
     }
 }

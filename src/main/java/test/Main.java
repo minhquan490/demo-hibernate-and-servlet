@@ -1,38 +1,33 @@
 /*package test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
-import service.UserService;
-import service.impl.UserServiceImpl;
-import model.*;
+import model.Category;
+import model.Product;
+import service.CategoryService;
+import service.ProductService;
+import service.impl.CategoryServiceImpl;
+import service.impl.ProductServiceImpl;
 
 public class Main {
+
+    static CategoryService categoryService = new CategoryServiceImpl();
+    static ProductService productService = new ProductServiceImpl();
     public static void main(String[] args) throws SQLException {
-        User user = new User();
-        UserService userService = new UserServiceImpl();
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("username");
-        String username = input.nextLine();
-        user.setUsername(username);
+        System.out.println("product");
+        String nameCategory = input.nextLine();
 
-        System.out.println("password");
-        String password = input.nextLine();
-        user.setPassword(password);
-
-        System.out.println("email");
-        String email = input.nextLine();
-        user.setEmail(email);
-
-        user.setRoleId(2);
-
-        boolean success = userService.register(user);
-        if (success) {
-            System.out.println("success");
-        } else {
-            System.out.println("fail");
+        List<Product> listProducts = productService.searchByName(nameCategory);
+        for (Product product : listProducts) {
+            System.out.println(product.getName());
         }
         input.close();
     }
