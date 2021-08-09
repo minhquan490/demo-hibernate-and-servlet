@@ -48,12 +48,6 @@
                         </c:forEach>
                     </tr>
                 </table><br>
-                <div>
-                    <form action="${pageContext.request.contextPath}/search" method="post">
-                        <input type="text" name="productName">
-                        <button type="submit">Search</button>
-                    </form>
-                </div><br>
                 <c:out value="Category" /><br>
                 <table>
                     <c:forEach items="${listCategories}" var="category">

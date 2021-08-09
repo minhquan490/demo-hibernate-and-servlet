@@ -3,15 +3,11 @@ package model;
 import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -26,9 +22,8 @@ public class Status implements Serializable {
     @Type(type = "long")
     private long id;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart cart;
+    @Column(name = "cart_id", nullable = false)
+    private String idCart;
 
     @Column(name = "approval_status")
     private String approvalStatus;
@@ -37,14 +32,20 @@ public class Status implements Serializable {
     @Type(type = "date")
     private Date buyDate;
 
+    @Column(name = "bill")
+    private String billLink;
+
     public Status() {
+        super();
     }
 
-    public Status(Cart cart, String approvalStatus, Date buyDate) {
+    public Status(long id, String idCart, String approvalStatus, Date buyDate, String billLink) {
         super();
-        this.cart = cart;
+        this.id = id;
+        this.idCart = idCart;
         this.approvalStatus = approvalStatus;
         this.buyDate = buyDate;
+        this.billLink = billLink;
     }
 
     public long getId() {
@@ -55,12 +56,12 @@ public class Status implements Serializable {
         this.id = id;
     }
 
-    public Cart getCart() {
-        return this.cart;
+    public String getIdCart() {
+        return this.idCart;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setIdCart(String idCart) {
+        this.idCart = idCart;
     }
 
     public String getApprovalStatus() {
@@ -77,5 +78,13 @@ public class Status implements Serializable {
 
     public void setBuyDate(Date buyDate) {
         this.buyDate = buyDate;
+    }
+
+    public String getBillLink() {
+        return this.billLink;
+    }
+
+    public void setBillLink(String billLink) {
+        this.billLink = billLink;
     }
 }

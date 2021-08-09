@@ -18,6 +18,9 @@ public class Random {
             case "order":
                 typeID = "HD-" + ID();
                 break;
+            case "bill":
+                typeID = "B-" + ID();
+                break;
         }
         return typeID;
     }

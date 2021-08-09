@@ -33,7 +33,7 @@ import utils.Random;
         * 100)
 public class ProductAddController extends HttpServlet {
 
-    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/";
+    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/Product/";
 
     CategoryService categoryService = new CategoryServiceImpl();
     ProductService productService = new ProductServiceImpl();

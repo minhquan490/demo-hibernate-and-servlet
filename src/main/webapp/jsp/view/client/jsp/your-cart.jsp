@@ -10,51 +10,60 @@
             </head>
 
             <body>
-                <c:choose>
-                    <c:when test="${not empty message}">
-                        <div>
-                            <c:out value="${message}" />
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div>
-                            My Cart:
-                            <br>
-                            <table>
-                                <c:forEach items="${listCartItems}" var="cartItem">
-                                    <tr>
-                                        <th>Product code</th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td>${cartItem.product.code}</td>
-                                        <td>${cartItem.product.name}</td>
-                                        <td>${cartItem.product.price}</td>
-                                        <td>${cartItem.quantity}</td>
-                                        <td>${cartItem.total}</td>
-                                        <td>
-                                            <form action="${pageContext.request.contextPath}/cart" method="get">
-                                                <input type="hidden" name="code" value="${cartItem.product.code}">
-                                                <input type="hidden" name="idCartItem" value="${cartItem.id}">
-                                                <input type="text" name="quantity">
-                                                <input type="submit" name="act" value="edit">
-                                            </form>
-                                            <br>
-                                            <form action="${pageContext.request.contextPath}/cart" method="get">
-                                                <input type="hidden" name="idCartItem" value="${cartItem.id}">
-                                                <input type="submit" name="act" value="delete">
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                <div>
+                    My Cart:&nbsp;
+                    <c:if test="${not empty message}">
+                        <c:out value="${message}" />
+                    </c:if>
+                    <c:choose>
+                        <c:when test="${empty listCartItems}">
+                            <div>
+                                <c:out value="is empty" />
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div>
+                                <br>
+                                <table>
+                                    <c:forEach items="${listCartItems}" var="cartItem">
+                                        <tr>
+                                            <th>Product code</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        <tr>
+                                            <td>${cartItem.product.code}</td>
+                                            <td>${cartItem.product.name}</td>
+                                            <td>${cartItem.product.price}</td>
+                                            <td>${cartItem.quantity}</td>
+                                            <td>${cartItem.total}</td>
+                                            <td>
+                                                <form action="${pageContext.request.contextPath}/cart" method="get">
+                                                    <input type="hidden" name="code" value="${cartItem.product.code}">
+                                                    <input type="hidden" name="idCartItem" value="${cartItem.id}">
+                                                    <input type="text" name="quantity">
+                                                    <input type="submit" name="act" value="edit">
+                                                </form>
+                                                <br>
+                                                <form action="${pageContext.request.contextPath}/cart" method="get">
+                                                    <input type="hidden" name="idCartItem" value="${cartItem.id}">
+                                                    <input type="submit" name="act" value="delete">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                                <br>
+                                <div>
+                                    <a type="button" href="${pageContext.request.contextPath}/order/add">Order</a>
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </body>
 
             </html>

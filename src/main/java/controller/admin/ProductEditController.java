@@ -31,7 +31,7 @@ import utils.Log;
         * 100)
 public class ProductEditController extends HttpServlet {
 
-    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/";
+    private static final String UPLOAD_LOCATION = "/home/quan/DataForProject/demo-hibernate-and-servlet/Product/";
 
     ProductService productService = new ProductServiceImpl();
     CategoryService categoryService = new CategoryServiceImpl();

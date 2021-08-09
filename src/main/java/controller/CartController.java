@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -103,8 +104,14 @@ public class CartController extends HttpServlet {
         CartItem cartItem = new CartItem(id, cart, product, quantity, total);
         cartItemService.save(cartItem);
 
-        Set<CartItem> cartItems = cart.getCartItems();
-        cartItems.add(cartItem);
+        Set<CartItem> cartItems;
+        try {
+            cartItems = cart.getCartItems();
+            cartItems.add(cartItem);
+        } catch (Exception e) {
+            cartItems = new HashSet<CartItem>();
+            cartItems.add(cartItem);
+        }
 
         cart.setCartItems(cartItems);
         cartService.edit(cart);

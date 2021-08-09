@@ -39,7 +39,7 @@ public class ListCartItemsController extends HttpServlet {
             cartItems = null;
         }
         if (cartItems == null) {
-            String message = "Your cart is empty";
+            String message = "is empty";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/client/jsp/your-cart.jsp").forward(req, resp);
             return;

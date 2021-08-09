@@ -31,7 +31,7 @@ public class ProductDeleteController extends HttpServlet {
         String code = req.getParameter("code");
         try {
             Product product = productService.getCode(code);
-            Files.deleteIfExists(Paths.get("/home/quan/DataForProject/demo-hibernate-and-servlet/" + product.getPicture()));
+            Files.deleteIfExists(Paths.get("/home/quan/DataForProject/demo-hibernate-and-servlet/Product/" + product.getPicture()));
             productService.delete(code);
             resp.sendRedirect(req.getContextPath() + "/admin/product/list");
         } catch (SQLException e) {

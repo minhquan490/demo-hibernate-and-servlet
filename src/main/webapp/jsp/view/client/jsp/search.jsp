@@ -53,7 +53,6 @@
                                         <tr>
                                             <th>Code</th>
                                             <th>Name</th>
-                                            <th>Categories</th>
                                             <th>Price</th>
                                             <th>Picture</th>
                                             <th>Action</th>
