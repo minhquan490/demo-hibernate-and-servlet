@@ -70,7 +70,7 @@ public class StatusDaoImpl implements StatusDao {
         Status status = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Status S WHERE S.status_id = :id";
+            String hql = "FROM Status S WHERE S.id = :id";
             Query query = session.createQuery(hql);
             status = (Status) query.setParameter("id", id).getSingleResult();
             transaction.commit();
@@ -82,14 +82,14 @@ public class StatusDaoImpl implements StatusDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Status> getListStatusOfUser(long id) {
+    public List<Status> getListStatusOfUser(String id) {
         List<Status> listStatus = null;
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM Status S WHERE S.cart_id = :id";
+            String hql = "FROM Status S WHERE S.idCart LIKE :id";
             Query query = session.createQuery(hql);
-            listStatus = query.setParameter("id", id).getResultList();
+            listStatus = query.setParameter("id", "%" + id + "%").getResultList();
             transaction.commit();
         } catch (Exception e) {
             Log.getLog("StatusDaoImpl", e.getMessage(), e);

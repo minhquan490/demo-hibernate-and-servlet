@@ -77,7 +77,7 @@
                         <a href="${pageContext.request.contextPath}/myaccount">My Account</a><br>
                         <a href="${pageContext.request.contextPath}/logout">Logout</a><br>
                         <c:choose>
-                            <c:when test="${roleId == '1'}">
+                            <c:when test="${sessionScope.user.roleId == '1'}">
                                 <a href="${pageContext.request.contextPath}/admin">Admin Page</a>
                             </c:when>
                             <c:otherwise>

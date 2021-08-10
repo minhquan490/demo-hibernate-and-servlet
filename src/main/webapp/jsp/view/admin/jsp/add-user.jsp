@@ -25,7 +25,7 @@
                 <input type="text" name="roleId"><br>
                 <button type="submit">Add</button>
             </form><br>
-            <a href="${pageContext.request.conTextPath}/admin/product/list">View list product</a>
+            <a href="${pageContext.request.contextPath}/admin/user/list">View list user</a>
         </body>
 
         </html>

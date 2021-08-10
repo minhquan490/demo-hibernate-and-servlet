@@ -61,16 +61,15 @@ public class AddOrderController extends HttpServlet {
             File save = File.createTempFile(billName, ".txt", dir);
             FileWriter writer = new FileWriter(save);
             for (CartItem cartItem : cartItems) {
-                writer.write(cartItem.getProduct().getName());
-                writer.write(cartItem.getQuantity());
+                writer.write(cartItem.getProduct().getName() + " " + String.valueOf(cartItem.getQuantity()) + " ");
                 fullTotal += cartItem.getTotal();
 
                 cartItems.remove(cartItem);
                 cartItemService.delete(cartItem.getId());
             }
-            writer.write(fullTotal);
+            writer.write(String.valueOf(fullTotal));
             writer.close();
-            status.setBillLink(save.getAbsolutePath());
+            status.setBillLink(save.getName());
         } catch (IOException e) {
             message = "Error";
             req.setAttribute("message", message);

@@ -15,7 +15,7 @@ public interface StatusService {
 
     List<Status> getAll();
 
-    List<Status> getListStatusOfUser(long id);
+    List<Status> getListStatusOfUser(String id);
 
     Status find(long id);
 }

@@ -15,14 +15,13 @@ import service.impl.StatusServiceImpl;
 
 @WebServlet(value = "/admin/order/list")
 public class OrderListController extends HttpServlet {
-    
+
     StatusService statusService = new StatusServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("idCart"));
-        List<Status> listStatus = statusService.getListStatusOfUser(id);
+        List<Status> listStatus = statusService.getAll();
         req.setAttribute("listStatus", listStatus);
-        req.getRequestDispatcher("/jsp/view/admin/jsp/order-controller.jps");
+        req.getRequestDispatcher("/jsp/view/admin/jsp/list-order.jsp").forward(req, resp);
     }
 }

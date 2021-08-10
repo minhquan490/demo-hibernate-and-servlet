@@ -20,7 +20,6 @@ public class StatusServiceImpl implements StatusService {
     @Override
     public void edit(Status newStatus) throws SQLException {
         Status oldStatus = statusDao.find(newStatus.getId());
-        oldStatus.setCart(newStatus.getCart());
         oldStatus.setApprovalStatus(newStatus.getApprovalStatus());
         statusDao.edit(oldStatus);
     }
@@ -41,7 +40,7 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public List<Status> getListStatusOfUser(long id) {
+    public List<Status> getListStatusOfUser(String id) {
         return statusDao.getListStatusOfUser(id);
     }
 }

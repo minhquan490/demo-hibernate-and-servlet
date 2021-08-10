@@ -63,6 +63,9 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
+                    <div>
+                        <a href="${pageContext.request.contextPath}/myorder">My Order</a>
+                    </div>
                 </div>
             </body>
 

@@ -114,8 +114,7 @@ public class ProductEditController extends HttpServlet {
 
         try {
             productService.edit(product);
-            message = "Edit success";
-            req.setAttribute("message", message);
+            resp.sendRedirect(req.getContextPath() + "/product/admin/edit");
         } catch (SQLException e) {
             Log.getLog("ProductAddController", e.getMessage(), e);
         }

@@ -1,6 +1,7 @@
 package controller.admin;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,25 +20,31 @@ public class OrderEditController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("idStatus"));
-        Status status = statusService.find(id);
-        req.setAttribute("status", status);
-        req.getRequestDispatcher("/jsp/view/admin/jsp/order-controller").forward(req, resp);
+        Status status = statusService.find(Long.parseLong(req.getParameter("idOrder")));
+        req.setAttribute("order", status);
+        req.getRequestDispatcher("/jsp/view/admin/jsp/edit-order.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Status status = new Status();
-        long id = Long.parseLong(req.getParameter("idStatus"));
-        status = statusService.find(id);
+        String id = req.getParameter("idOrder");
         String approvalStatus = req.getParameter("approvalStatus");
 
+        status.setId(Long.parseLong(id));
+
         if (approvalStatus.isBlank()) {
-            String message = "Enter approval status";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("/jsp/view/admin/jsp/order-controller.jsp").forward(req, resp);
-        } else {
-            status.setApprovalStatus(approvalStatus);
+            resp.sendRedirect(req.getContextPath() + "/admin/order/list");
+            return;
+        }
+
+        status.setApprovalStatus(approvalStatus);
+
+        try {
+            statusService.edit(status);
+            resp.sendRedirect(req.getContextPath() + "/admin/order/list");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
