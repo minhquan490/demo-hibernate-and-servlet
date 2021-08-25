@@ -152,4 +152,26 @@ public class ProductDaoImpl implements ProductDao{
         }
         return product;
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Product> getSaleProduct(String result) {
+        Transaction transaction = null;
+        List<Product> products = null;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.getTransaction();
+            String hql = "FROM Product P WHERE P.saleDescription = :description";
+            Query query = session.createQuery(hql);
+            query.setParameter("description", "a");
+            if (result.equals("all")) {
+                products = query.getResultList();
+            } else {
+                products = query.setMaxResults(9).getResultList();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            Log.getLog("ProductDaoImpl", e.getMessage(), e);
+        }
+        return products;
+    }
 }

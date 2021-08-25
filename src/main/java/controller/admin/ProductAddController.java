@@ -59,11 +59,27 @@ public class ProductAddController extends HttpServlet {
         String productCode = Random.getID("product");
         String productName = getValue(req.getPart("productName"));
         String price = getValue(req.getPart("price"));
-        Category category = categoryService.get(getValue(req.getPart("categoryName")));
+        String salePrice = getValue(req.getPart("salePrice"));
+        String saleDescription = getValue(req.getPart("saleDescription"));
+        Category category = categoryService.get(getValue(req.getPart("categoryName")));//TODO check and modify this line because it will cause critical error when product has multi category
         Part filePart = req.getPart("image");
 
         product.setId(id);
         product.setCode(productCode);
+
+        if (saleDescription == null) {
+            saleDescription = "a";
+            product.setSaleDescription(saleDescription);
+        } else {
+            product.setSaleDescription(saleDescription);
+        }
+
+        if (salePrice.isBlank()) {
+            salePrice = "0";
+            product.setSalePrice(Integer.parseInt(salePrice));
+        } else{
+            product.setSalePrice(Integer.parseInt(salePrice));
+        }
 
         if (productName.isBlank()) {
             message = "Name of product is not empty";
@@ -102,7 +118,6 @@ public class ProductAddController extends HttpServlet {
                 try (InputStream input = filePart.getInputStream()) {
                     Files.copy(input, uploadPNG.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
-                resp.sendRedirect(req.getContextPath() + "/admin/product/list");
                 product.setPicture(uploadPNG.getName());
                 break;
             case "image/jpeg":
@@ -113,7 +128,6 @@ public class ProductAddController extends HttpServlet {
                     Files.copy(input, uploadJPG.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
                 product.setPicture(uploadJPG.getName());
-                resp.sendRedirect(req.getContextPath() + "/admin/product/list");
                 break;
             default:
                 message = "File much be .jpg or .png";
@@ -124,8 +138,7 @@ public class ProductAddController extends HttpServlet {
 
         try {
             productService.save(product);
-            message = "Save success";
-            req.setAttribute("message", message);
+            resp.sendRedirect(req.getContextPath() + "/admin/product/list");
         } catch (SQLException e) {
             Log.getLog("ProductAddController", e.getMessage(), e);
         }

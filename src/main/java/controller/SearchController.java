@@ -23,12 +23,21 @@ public class SearchController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String select = req.getParameter("select");
 
-        List<Product> listProducts = categoryService.getListProductsFromCategory(req.getParameter("nameCategory"));
-
-        req.setAttribute("listProductSearchByCategory", listProducts);
-        req.setAttribute("selector", 1);
-        req.getRequestDispatcher("/jsp/view/client/jsp/search.jsp").forward(req, resp);
+        switch (select) {
+            case "1":
+                doPost(req, resp);
+                break;
+            case "0":
+                List<Product> listProducts = categoryService.getListProductsFromCategory(req.getParameter("nameCategory"));
+                req.setAttribute("listProductSearchByCategory", listProducts);
+                req.getRequestDispatcher("/jsp/view/client/jsp/search.jsp").forward(req, resp);
+                break;
+            default:
+                resp.sendError(404);
+                break;
+        }
     }
 
     @Override
@@ -37,7 +46,6 @@ public class SearchController extends HttpServlet {
         List<Product> products = productService.searchByName(req.getParameter("productName"));
 
         req.setAttribute("listProductSearchByName", products);
-        req.setAttribute("selector", 0);
         req.getRequestDispatcher("/jsp/view/client/jsp/search.jsp").forward(req, resp);
     }
 }

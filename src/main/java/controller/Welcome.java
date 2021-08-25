@@ -24,12 +24,13 @@ public class Welcome extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         List<Category> listCategories = categoryService.getAll();
         List<Product> listProducts = productService.getAll();
+        List<Product> listProductsHasSale = productService.getSaleProduct("a");
 
         req.setAttribute("listCategories", listCategories);
         req.setAttribute("listProducts", listProducts);
+        req.setAttribute("listProductsHasSale", listProductsHasSale);
         req.getRequestDispatcher("/jsp/index.jsp").forward(req, resp);
     }
 }

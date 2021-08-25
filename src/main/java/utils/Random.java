@@ -10,7 +10,7 @@ public class Random {
                 typeID = "P-" + ID();
                 break;
             case "user":
-                typeID = UID();
+                typeID = "U-" + UID();
                 break;
             case "card":
                 typeID = "C-" + ID();

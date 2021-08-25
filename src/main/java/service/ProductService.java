@@ -23,5 +23,7 @@ public interface ProductService {
 
     List<Product> searchByName(String name);
 
+    List<Product> getSaleProduct(String result);
+
     boolean checkProductExist(String name);
 }

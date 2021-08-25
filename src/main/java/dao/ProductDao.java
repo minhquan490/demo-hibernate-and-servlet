@@ -18,6 +18,8 @@ public interface ProductDao {
 
     Product getCode(String code);
 
+    List<Product> getSaleProduct(String result);
+
     List<Product> getAll();
 
     List<Product> searchByName(String name);

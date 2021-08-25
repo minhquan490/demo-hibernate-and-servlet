@@ -26,6 +26,8 @@ public class ProductServiceImpl implements ProductService {
         oldProduct.setName(newProduct.getName());
         oldProduct.setCategories(newProduct.getCategories());
         oldProduct.setPrice(newProduct.getPrice());
+        oldProduct.setSalePrice(newProduct.getSalePrice());
+        oldProduct.setSaleDescription(newProduct.getSaleDescription());
         if (newProduct.getPicture() != null) {
             try {
                 Files.deleteIfExists(Paths.get(oldProduct.getPicture()));
@@ -70,5 +72,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getCode(String code) {
         return productDao.getCode(code);
+    }
+
+    @Override
+    public List<Product> getSaleProduct(String result) {
+        return productDao.getSaleProduct(result);
     }
 }

@@ -50,6 +50,9 @@ public class User implements Serializable {
     @Type(type = "text")
     private String password;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Column(name = "role_id")
     private int roleId;
 
@@ -57,7 +60,7 @@ public class User implements Serializable {
         super();
     }
 
-    public User(long id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password) {
+    public User(long id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password, int roleId, String avatar) {
         super();
         this.id = id;
         this.fullName = fullName;
@@ -67,6 +70,8 @@ public class User implements Serializable {
         this.phone = phone;
         this.username = username;
         this.password = sha256(password);
+        this.roleId = roleId;
+        this.avatar = avatar;
     }
 
     public User(long id, String email, String username, String password, int roleId) {
@@ -156,6 +161,14 @@ public class User implements Serializable {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     private String sha256(String password) {

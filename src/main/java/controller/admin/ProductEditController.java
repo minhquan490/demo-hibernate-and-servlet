@@ -50,10 +50,19 @@ public class ProductEditController extends HttpServlet {
         String productCode = getValue(req.getPart("code"));
         String productName = getValue(req.getPart("productName"));
         String price = getValue(req.getPart("price"));
+        String salePrice = getValue(req.getPart("salePrice"));
+        String saleDescription = getValue(req.getPart("saleDescription"));
         Category category = categoryService.get(getValue(req.getPart("categoryName")));
         Part filePart = req.getPart("image");
 
         product.setCode(productCode);
+
+        if (saleDescription == null) {
+            saleDescription = "a";
+            product.setSaleDescription(saleDescription);
+        } else {
+            product.setSaleDescription(saleDescription);
+        }
 
         if (productName.isBlank()) {
             message = "Name of product is not empty";
@@ -71,6 +80,13 @@ public class ProductEditController extends HttpServlet {
             return;
         } else {
             product.setPrice(Integer.parseInt(price));
+        }
+
+        if (salePrice.isBlank()) {
+            salePrice = "0";
+            product.setSalePrice(Integer.parseInt(salePrice));
+        } else{
+            product.setSalePrice(Integer.parseInt(salePrice));
         }
 
         if (category == null) {

@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         oldUser.setPhone(newUser.getPhone());
         oldUser.setUsername(newUser.getUsername());
         oldUser.setPassword(newUser.getPassword());
+        oldUser.setAvatar(newUser.getAvatar());
         oldUser.setRoleId(newUser.getRoleId());
         userDao.edit(oldUser);
     }

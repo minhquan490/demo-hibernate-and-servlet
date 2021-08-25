@@ -39,22 +39,28 @@ public class Product implements Serializable {
     @Column(name = "price")
     private int price;
 
+    @Column(name = "sale_price")
+    private int salePrice;
+
     @Column(name = "picture_url")
     private String picture;
+
+    @Column(name = "sale_description")
+    private String saleDescription;
 
     public Product() {
         super();
     }
 
-
-    public Product(long id, String code, String name, Set<Category> categories, int price, String picture) {
-        super();
+    public Product(long id, String code, String name, Set<Category> categories, int price, int salePrice, String picture, String saleDescription) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.categories = categories;
         this.price = price;
+        this.salePrice = salePrice;
         this.picture = picture;
+        this.saleDescription = saleDescription;
     }
 
     public long getId() {
@@ -97,11 +103,27 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public int getSalePrice() {
+        return this.salePrice;
+    }
+
+    public void setSalePrice(int salePrice) {
+        this.salePrice = salePrice;
+    }
+
     public String getPicture() {
         return this.picture;
     }
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public String getSaleDescription() {
+        return this.saleDescription;
+    }
+
+    public void setSaleDescription(String saleDescription) {
+        this.saleDescription = saleDescription;
     }
 }

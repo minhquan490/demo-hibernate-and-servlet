@@ -24,7 +24,6 @@ import service.impl.CartItemServiceImpl;
 import service.impl.CartServiceImpl;
 import service.impl.ProductServiceImpl;
 import service.impl.UserServiceImpl;
-import utils.Log;
 import utils.Random;
 
 @WebServlet(value = "/cart")
@@ -41,25 +40,6 @@ public class CartController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
-        } else {
-            Cart cart = cartService.get(user);
-            if (cart == null) {
-                Cart newCart = new Cart();
-                newCart.setId(user.getId());
-                newCart.setUser(user);
-                try {
-                    cartService.add(newCart);
-                    session.setAttribute("cart", cart);
-                    doPost(req, resp);
-                    return;
-                } catch (SQLException e) {
-                    Log.getLog("CartController", e.getMessage(), e);
-                }
-            } else {
-                session.setAttribute("cart", cart);
-                doPost(req, resp);
-                return;
-            }
         }
     }
 
@@ -99,7 +79,7 @@ public class CartController extends HttpServlet {
 
         long id = Long.parseLong(Random.getID("user"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
-        int total = product.getPrice() * quantity;
+        int total = (product.getPrice() - product.getSalePrice()) * quantity;
 
         CartItem cartItem = new CartItem(id, cart, product, quantity, total);
         cartItemService.save(cartItem);
@@ -115,6 +95,8 @@ public class CartController extends HttpServlet {
 
         cart.setCartItems(cartItems);
         cartService.edit(cart);
+
+        session.setAttribute("cart", cart);
 
         resp.sendRedirect(req.getContextPath() + "/cart/list");
     }
@@ -137,6 +119,8 @@ public class CartController extends HttpServlet {
             }
         }
 
+        session.setAttribute("cart", cart);
+
         resp.sendRedirect(req.getContextPath() + "/cart/list");
     }
 
@@ -156,6 +140,8 @@ public class CartController extends HttpServlet {
 
         cart.setCartItems(cartItems);
         cartService.edit(cart);
+
+        session.setAttribute("cart", cart);
 
         resp.sendRedirect(req.getContextPath() + "/cart/list");
     }
