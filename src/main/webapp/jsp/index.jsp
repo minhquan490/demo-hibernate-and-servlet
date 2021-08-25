@@ -84,7 +84,7 @@
                                         <li class="header__navbar-item header__navbar-user">
                                             <c:choose>
                                                 <c:when test="${empty sessionScope.user.avatar}">
-                                                    <img src="./jsp/view/assets/img/avatar.jpg" alt="avatar" class="header__navbar-user-img">
+                                                    <i class=" fas fa-user" style="position: relative; top: -1px;"></i>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <img src="${pageContext.request.contextPath}/images/${sessionScope.user.avatar}" alt="avatar" class="header__navbar-user-img">
@@ -322,7 +322,7 @@
                         </div>
                     </div>
                 </div>
-                <footer class="footer">
+                <div class="footer">
                     <div class="grid">
                         <div class="gird__row" style="display: inline-flex;width: 1200px;">
                             <div class="grid__column-2-4" style="width: 20%;">
@@ -400,7 +400,7 @@
                             </div>
                         </div>
                     </div>
-                </footer>
+                </div>
             </div>
         </body>
 

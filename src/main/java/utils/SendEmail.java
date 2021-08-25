@@ -22,7 +22,7 @@ public class SendEmail {
         Session session = Session.getInstance(properties, new Authenticator(){
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("behom4901@gmail.com", "quanpro490");
+                return new PasswordAuthentication("hminhquan0401@gmail.com", "quan0868550492");
             }
         });
         try {
