@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,13 +56,15 @@ public class ProductAddController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Product product = new Product();
+        Set<Category> categories = new HashSet<Category>();
+        Category category;
         long id = Long.parseLong(Random.getID("user"));
         String productCode = Random.getID("product");
         String productName = getValue(req.getPart("productName"));
         String price = getValue(req.getPart("price"));
         String salePrice = getValue(req.getPart("salePrice"));
         String saleDescription = getValue(req.getPart("saleDescription"));
-        Category category = categoryService.get(getValue(req.getPart("categoryName")));//TODO check and modify this line because it will cause critical error when product has multi category
+        Set<String> nameCategories = getNameCategory(getValue(req.getPart("categoryName")));
         Part filePart = req.getPart("image");
 
         product.setId(id);
@@ -77,7 +80,7 @@ public class ProductAddController extends HttpServlet {
         if (salePrice.isBlank()) {
             salePrice = "0";
             product.setSalePrice(Integer.parseInt(salePrice));
-        } else{
+        } else {
             product.setSalePrice(Integer.parseInt(salePrice));
         }
 
@@ -99,15 +102,17 @@ public class ProductAddController extends HttpServlet {
             product.setPrice(Integer.parseInt(price));
         }
 
-        if (category == null) {
+        if (nameCategories != null) {
+            for (String name : nameCategories) {
+                category = categoryService.get(name);
+                categories.add(category);
+            }
+            product.setCategories(categories);
+        } else {
             message = "Category is not empty";
             req.setAttribute("message", message);
             req.getRequestDispatcher("/jsp/view/admin/jsp/add-product.jsp").forward(req, resp);
             return;
-        } else {
-            Set<Category> categories = product.getCategories();
-            categories.add(category);
-            product.setCategories(categories);
         }
 
         switch (filePart.getContentType()) {
@@ -148,9 +153,18 @@ public class ProductAddController extends HttpServlet {
         BufferedReader reader = new BufferedReader(new InputStreamReader(part.getInputStream(), "UTF-8"));
         StringBuilder value = new StringBuilder();
         char[] buffer = new char[1024];
-        for(int length = 0; (length = reader.read(buffer)) > 0;) {
+        for (int length = 0; (length = reader.read(buffer)) > 0;) {
             value.append(buffer, 0, length);
         }
         return value.toString();
+    }
+
+    private static Set<String> getNameCategory(String a) {
+        Set<String> nameCategories = new HashSet<String>();
+        String[] answer = a.split("[,]");
+        for (String b : answer) {
+            nameCategories.add(b.trim());
+        }
+        return nameCategories;
     }
 }
