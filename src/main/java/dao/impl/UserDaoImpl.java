@@ -62,13 +62,22 @@ public class UserDaoImpl implements UserDao{
     public User get(String username) {
         Transaction transaction = null;
         User user = null;
+        String hql = "";
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            String hql = "FROM User U WHERE U.username = :username";
-            Query query = session.createQuery(hql);
-            query.setParameter("username", username);
-            user = (User) query.getSingleResult();
-            transaction.commit();
+            if (username.matches(EMAIL_VALID)) {
+                hql = "FROM User U WHERE U.email = :email";
+                Query query = session.createQuery(hql);
+                query.setParameter("email", username);
+                user = (User) query.getSingleResult();
+                transaction.commit();
+            } else {
+                hql = "FROM User U WHERE U.username = :username";
+                Query query = session.createQuery(hql);
+                query.setParameter("username", username);
+                user = (User) query.getSingleResult();
+                transaction.commit();
+            }
         } catch (Exception e) {
 			Log.getLog("UserDaoImpl", e.getMessage(), e);
         }

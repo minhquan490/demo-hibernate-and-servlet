@@ -12,8 +12,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
-    
-    public boolean sendEmail(String to, String subject, String text) {
+
+    public boolean sendEmail(String to, String subject, String type, String token) {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
@@ -31,9 +31,22 @@ public class SendEmail {
             message.setFrom(new InternetAddress("demo-hibernate-and-servlet"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(text);
+            switch (type) {
+                case "register":
+                    String register = "Đăng ký thành công, vui lòng đăng nhập để sử dụng dịch vụ";
+                    message.setText(register);
+                    break;
+                case "forgot":
+                    String url = "https://localhost:8080/forgot?a=" + token + '"';
+                    String content="<a href='" + url + "'>" + url + "</a>";
+                    String text = "Bạn đã gửi yêu cầu reset mật khẩu. Vui lòng nhấp vào link và đặt mật khẩu mới";
+                    message.setText(text);
+                    message.setText(content);
+                    break;
+            }
             Transport.send(message);
         } catch (MessagingException e) {
+            Log.getLog("SendEmail", e.getMessage(), e);
             return false;
         }
         return true;

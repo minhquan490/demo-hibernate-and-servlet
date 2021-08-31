@@ -139,7 +139,8 @@ public class ResigterController extends HttpServlet {
             Boolean success = userService.register(user);
             if (success) {
                 SendEmail sendEmail = new SendEmail();
-                sendEmail.sendEmail(email, "Demo Hibernate and Servlet", "Please login to use service");
+                String code = "";
+                sendEmail.sendEmail(email, "Demo Hibernate and Servlet", "register", code);
                 resp.sendRedirect(req.getContextPath() + "/login");
             } else {
                 message = "Error !";

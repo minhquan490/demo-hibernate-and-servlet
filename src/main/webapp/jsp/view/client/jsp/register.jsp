@@ -50,7 +50,7 @@
                                         <input type="date" class="register__form-input" name="birthDate" id="birthDate">
                                     </div>
                                     <input type="text" class="register__form-input" name="address" placeholder="Địa chỉ (*)">
-                                    <input type="text" class="register__form-input" name="phone" placeholder="Điện thoại (*)">
+                                    <input type="number" class="register__form-input" name="phone" placeholder="Điện thoại (*)">
                                     <input type="password" class="register__form-input" name="password" placeholder="Mật khẩu (*)">
                                     <input type="password" class="register__form-input" name="re-password" placeholder="Nhập lại mật khẩu (*)">
                                     <input type="text" class="register__form-input" name="email" placeholder="Email (*)">

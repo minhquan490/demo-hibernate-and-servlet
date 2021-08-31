@@ -24,5 +24,6 @@
     <mapping class="model.Cart"/>
     <mapping class="model.CartItem"/>
     <mapping class="model.Status"/>
+    <mapping class="model.PasswordForgotten"/>
   </session-factory>
 </hibernate-configuration>

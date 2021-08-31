@@ -161,7 +161,7 @@ public class ProductAddController extends HttpServlet {
 
     private static Set<String> getNameCategory(String a) {
         Set<String> nameCategories = new HashSet<String>();
-        String[] answer = a.split("[,]");
+        String[] answer = a.split("[,.]");
         for (String b : answer) {
             nameCategories.add(b.trim());
         }

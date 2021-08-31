@@ -6,14 +6,14 @@ import java.util.List;
 import model.User;
 
 public interface UserDao {
-    
+
     void save(User user) throws SQLException;
 
     void edit(User user) throws SQLException;
 
     boolean delete(String username) throws SQLException;
 
-    User get(String username);
+    User get(String emailOrUsername);
 
     User get(long id);
 

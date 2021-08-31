@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String username) {
-        return userDao.get(username);
+    public User get(String emailOrUsername) {
+        return userDao.get(emailOrUsername);
     }
 
     @Override

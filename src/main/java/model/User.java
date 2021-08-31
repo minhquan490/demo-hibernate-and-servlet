@@ -2,12 +2,17 @@ package model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -56,22 +61,26 @@ public class User implements Serializable {
     @Column(name = "role_id")
     private int roleId;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<PasswordForgotten> sPasswordForgottens = new HashSet<>();
+
     public User() {
         super();
     }
 
-    public User(long id, String fullName, String gender, Date birthDate, String address, String phone, String username, String password, int roleId, String avatar) {
-        super();
+    public User(long id, String fullName, String email, String gender, Date birthDate, String address, String phone, String username, String password, String avatar, int roleId, Set<PasswordForgotten> sPasswordForgottens) {
         this.id = id;
         this.fullName = fullName;
+        this.email = email;
         this.gender = gender;
         this.birthDate = birthDate;
         this.address = address;
         this.phone = phone;
         this.username = username;
         this.password = sha256(password);
-        this.roleId = roleId;
         this.avatar = avatar;
+        this.roleId = roleId;
+        this.sPasswordForgottens = sPasswordForgottens;
     }
 
     public User(long id, String email, String username, String password, int roleId) {
@@ -169,6 +178,14 @@ public class User implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Set<PasswordForgotten> getSPasswordForgottens() {
+        return this.sPasswordForgottens;
+    }
+
+    public void setSPasswordForgottens(Set<PasswordForgotten> sPasswordForgottens) {
+        this.sPasswordForgottens = sPasswordForgottens;
     }
 
     private String sha256(String password) {

@@ -21,6 +21,9 @@ public class Random {
             case "bill":
                 typeID = "B-" + ID();
                 break;
+            case "token":
+                typeID = ID();
+                break;
         }
         return typeID;
     }

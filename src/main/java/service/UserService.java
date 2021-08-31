@@ -21,7 +21,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    List<User> search(String username);
+    List<User> search(String emailOrUsername);
 
     boolean register(User user) throws SQLException;
 
