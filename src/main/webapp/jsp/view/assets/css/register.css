@@ -31,11 +31,6 @@
     width: 50%;
 }
 
-.register__header-link--active {
-    border-bottom: 2px solid var(--primary-color);
-    cursor: default;
-}
-
 .register__form {
     border-top: 1px solid #F5F5F5;
     padding: 20px 20px 4px 20px;

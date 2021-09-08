@@ -37,7 +37,7 @@ public class SendEmail {
                     message.setText(register);
                     break;
                 case "forgot":
-                    String url = "https://localhost:8080/forgot?a=" + token + '"';
+                    String url = "https://localhost:8080/user/forgot?a=" + token + '"';
                     String content="<a href='" + url + "'>" + url + "</a>";
                     String text = "Bạn đã gửi yêu cầu reset mật khẩu. Vui lòng nhấp vào link và đặt mật khẩu mới";
                     message.setText(text);

@@ -26,11 +26,6 @@
     border-bottom: 2px solid var(--primary-color);
 }
 
-.login__header-link--active {
-    border-bottom: 2px solid var(--primary-color);
-    cursor: default;
-}
-
 .login__form {
     border-top: 1px solid #F5F5F5;
     padding: 20px 20px 4px 20px;
@@ -62,4 +57,16 @@
 .login__footer-content {
     font-size: 1.6rem;
     text-decoration: none;
+}
+
+.login__form-checkbox {
+    margin-bottom: 16px;
+    margin-left: 4px;
+    font-size: 1.5rem;
+}
+
+.login__form-checkbox--wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

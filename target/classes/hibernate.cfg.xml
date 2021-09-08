@@ -1,0 +1,29 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://127.0.0.1:3306/demo_hibernate_using_servlet?useSSL=false</property>
+    <property name="connection.username">quan</property>
+    <property name="connection.password">quan0868550492</property>
+    <property name="connection.pool_size">1</property>
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <property name="current_session_context_class">thread</property>
+    <property name="hbm2ddl.auto">update</property>
+
+    <property name="hibernate.dbcp.initialSize">5</property>
+	  <property name="hibernate.dbcp.maxTotal">20</property>
+	  <property name="hibernate.dbcp.maxIdle">10</property>
+	  <property name="hibernate.dbcp.minIdle">5</property>
+	  <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+
+    <mapping class="model.User"/>
+    <mapping class="model.Product"/>
+    <mapping class="model.Category"/>
+    <mapping class="model.Cart"/>
+    <mapping class="model.CartItem"/>
+    <mapping class="model.Status"/>
+    <mapping class="model.PasswordForgotten"/>
+  </session-factory>
+</hibernate-configuration>

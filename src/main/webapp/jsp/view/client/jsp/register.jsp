@@ -30,7 +30,7 @@
                                     <a href="${pageContext.request.contextPath}/login" class="register__header-link btn">Đăng nhập</a>
                                 </div>
                                 <div class="register__header-register">
-                                    <a href="#" class="register__header-link btn register__header-link--active">Đăng ký</a>
+                                    <a href="#" class="register__header-link btn" style="border-bottom: 2px solid var(--primary-color); cursor: default;">Đăng ký</a>
                                 </div>
                             </div>
                             <div class="register__form">
