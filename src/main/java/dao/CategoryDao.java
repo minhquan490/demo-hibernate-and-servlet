@@ -8,7 +8,7 @@ import model.Product;
 
 public interface CategoryDao {
 
-    void save(Category category) throws SQLException;
+    	void save(Category category) throws SQLException;
 
 	void edit(Category category) throws SQLException;
 
